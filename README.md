@@ -8,9 +8,9 @@ To use this, I recommend downloading and installing [TexLive 2015](https://www.t
 
 The sample document is organized in the following way:
 
-uhthesis.cls   // The style file.
+uhthesis.cls  (The style file.)
 
-thesis.tex    // The 'master' file.   Sets up the document, and includes the following files:
+thesis.tex    (The 'master' file.   Sets up the document, and includes the following files:)
 
 * abstract.tex
 * acknowledgements.tex
@@ -22,7 +22,7 @@ thesis.tex    // The 'master' file.   Sets up the document, and includes the fol
 * conclusion.tex
 * references.bib
 
-This repo also includes a convenient Makefile for generating the PDF.  After downloading this repo and installing TexLive, you should be able to generate a PDF version of the sample document by typing 'make':
+This repo also includes a convenient Makefile for generating the PDF.  After downloading this repo and installing TexLive, you should be able to generate a PDF version of the sample document (called thesis.pdf) by typing 'make':
 
 ```
 [~/github/csdl/sample-thesis]-> make
