@@ -130,3 +130,8 @@ sympy-plots-for-*.tex/
 *.bak
 *.sav
 
+# PDFs should only be in releases, not stored to repo
+*.pdf
+
+
+
