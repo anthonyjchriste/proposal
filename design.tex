@@ -10,16 +10,31 @@ The Laha framework acts as an adaptive sieve for filtering noise and uninteresti
 Each layer only keeps data for a specified amount of time before it is garbage collected. As data moves up the pyramid, it is generally considered more useful and therefore has a longer Time to Live (TTL), the amount of the time the data lives before it is garbage collected.  When a higher layer detects "something interesting", the data contained in the time window of "something interesting" is copied into the layers above it and will still persist even though the original data is garbage collected. In this way, we preserve data from all layers if they are associated with interesting data. 
 % TODO: Figure of Laha layers here
 
-\subsubsection{Instantaneous Measurements}
+\subsubsection{Instantaneous Measurements Layer}
 The Instantaneous Measurements Layer (IML) receives raw, sampled data from the DSN. The amount of data received is determined by the sample rate of each device multiplied by the number of fields per sample. Most of the time samples, from devices in the network are mainly sampling noise. A large percentage of the data in this layer is destined for garbage collection and data is assigned a Time to Live (TTL) of one hour. 
 
 
-\subsubsection{Aggregate Measurements}
+\subsubsection{Aggregate Measurements Layer}
+The Aggregate Measurements Layer (AML) is responsible for rolling up IMs from the IML. In general, this layer only works with feature extracted data, rather than working with the raw samples. Each measurement in the AML provides summary statistics over a configurable time window. For example, these can include min, max, mean, median, mode, and variance statistics. 
 
-\subsubsection{Detections}
+It's possible to breakup the AML into several sub layers, each with different window sizes. For example, we might roll IMs into one minute AMs, then roll one minute AMs into hour AMs, then days, and so on. Each sublayer within the AML can have its own configurable TTL, ensuring long term summary statistics stick around for as long as needed. This provides us a high level view of the network and can provide insights into long term trends which wouldn't be visible (or available) in the IM data stream.
 
-\subsubsection{Incidents}
+Similar to IMs, AMs can be saved and copied to the layers above it when interesting data is observed. This ability allows for AMs during these time periods to be stored and saved from the garbage collection process.
 
-\subsubsection{Phenomena}
+At this point in the hierarchy, we are still not providing any context to the data that we are receiving. Context is provided by layers above the AML.
+
+\subsubsection{Detections Layer}
+The Detections Layer (DL) is the first layer that provides some context to the data that the sink is receiving. This layer is responsible watching the feature extracted data streams, and requesting IMs from the IM layer. In general, the detection layer is meant to be trigger happy, pun intended, and be overly aggressive when determining if a feature extracted data stream looks interesting. 
+
+When a data stream looks interesting, the DL marks a timestamp $N$ seconds before the interesting features and $M$ seconds after the interesting features, where both $N$ and $M$ are configurable within the framework. The goal is to use a time window that catches signals of interest within it. Since these data ranges will be further processed and refined higher in the hierarchy, there is no issue with collecting larges amounts of data in this layer. 
+
+The actual methods of detection is dependent on the characteristics of every individual sensor network. This framework assumes that the detection algorithms are provided by the implementing frameworks.
+
+Similar to other layers, the DL layer will have its IMs and AMs copied into layers above it when upper layers observe something interesting in the DL. The detections layer is set to have a TTL of a week.
+
+\subsubsection{Incidents Layer}
+The incidents layer provides industry standard context to collected data. This is generally provided in the form of classifications.
+
+\subsubsection{Phenomena Layer}
 
 \subsection{Phenomena: Providing Adaptive Optimizations in Laha}
