@@ -35,3 +35,4 @@ DSNs
 TCP
 IP
 Zigbee
+bluetooth
