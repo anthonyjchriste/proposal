@@ -16,6 +16,13 @@ if __name__ == "__main__":
             errs = list(map(lambda line: line.strip(), stdout.strip().split(b"\n")))
             errors.extend(errs)
 
+        # Check for todo as well
+        with open(tex_file, "r") as fin:
+            for line_no, line in enumerate(fin.readlines()):
+                l = line.strip().lower()
+                if "% todo" in l or "%todo" in l:
+                    print("WARN: todo {}:{}".format(tex_file, line_no))
+
     if len(errors) > 0:
         print("Errors found...")
         for error in errors:

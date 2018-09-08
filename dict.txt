@@ -24,7 +24,6 @@ IMs
 DL
 AMs
 sublayer
-sublayer
 IM
 wouldn't
 wouldn
@@ -32,3 +31,7 @@ plugin
 plugins
 timestamp
 timestamps
+DSNs
+TCP
+IP
+Zigbee
