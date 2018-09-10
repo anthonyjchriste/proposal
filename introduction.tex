@@ -1,7 +1,7 @@
 \chapter{Introduction}
 
 \section{Overview of Distributed Sensor Networks}
-Distributed sensor networks (DSNs) consist of any number of sensors that collect and sense information about the environment around them. The sensors that make up these networks can either be homogeneous or heterogeneous. Distributed sensor networks are dynamic in that sensors can be added or removed from the network at any time. DSNs are also increasingly including mobile sensors as well. With the onset of the Internet of Things (IoT), it’s easier than ever to build and deploy distributed sensor networks. Further, mobile devices, such as mobile phones, are seeing increased usage as intelligent sensing agents.
+Distributed sensor networks (DSNs) consist of any number of sensors that collect and sense information about the physical environment around them. The sensors that make up these networks can either be homogeneous or heterogeneous. Distributed sensor networks are dynamic in that sensors can be added or removed from the network at any time. DSNs are also increasingly including mobile sensors as well. With the onset of the Internet of Things (IoT), it’s easier than ever to build and deploy distributed sensor networks. Further, mobile devices, such as mobile phones, are seeing increased usage as intelligent sensing agents.
 
 \subsection{DSN Data Collection Schemes}
 Data can be collected from DSNs in various ways. Sensors can store data onboard to be collected manually or transmit data via a multitude of mediums (satellites, radio, laser, wired connections) using a slew of standards (TCP/IP, Zigbee, Bluetooth, custom, etc).
@@ -18,14 +18,16 @@ On one extreme end we have the send everything approach where each sensor sends 
 
 The other extreme is that sensors only send data when they have detected a signal of interest. In this scenario, sensors use onboard computing capabilities to filter their sensor stream and perform signal detection on the device. Only when the devices make a detection do they send the detection or data stream to a sink for further processing. This minimizes bandwidth but detection and classification of signals must occur with more constrained computing and energy environments. Further, the global state of the network can't be known without adding the complexity of sensor-to-sensor communication.
 
-Often time a hybrid approach is taken where low fidelity feature extracted and sometimes aggregate data is send from the sensors to the sink. The sink analyzes the low fidelity feature extracted stream to determine if raw data should be requested from the sensors. The act of requesting data from the sensors is called triggering. This approach is useful because we still gain bandwidth benefits and can easily get a sensor for the global state of a network.
+Often time a hybrid approach is taken where low fidelity feature extracted and sometimes aggregate data is sent from the sensors to the sink. The sink analyzes the low fidelity feature extracted stream to determine if raw data should be requested from the sensors. The act of requesting data from the sensors is called triggering. This approach is useful because we still gain bandwidth benefits and can easily gain an understanding of the global state of a network.
 
-With all of these factors combined, management, collection, detection, localization, and analysis from distributed sensor networks is not a trivial task. The data collected from distributed sensor networks under certain circumstances is considered Big Data. 
+With all of these factors combined, management, collection, detection, localization, and analysis from distributed sensor networks is not a trivial task. DSNs can produce massive amounts of data. The emergence of IoT has increased the heterogeneity of sensors with multiple hardware configurations, variations of data APIs, and incomplete or bad sensor data. For these reasons, the data collected from distributed sensor networks under certain circumstances is considered Big Data. 
+
+\subsection{DSN Classification Schemes}
 
 \subsection{DSNs as Big Data}
 Big Data is generally defined by the four V's; volume, velocity, variety, and value. These characteristics can be observed in many of the DSNs that exist and are being created today. % TODO more citations
 
-That is, distributed sensor networks create a large volume of data due to the abundance of IoT and mobile devices that make up DSNs. As communication infrastructures improve and hardware becomes smaller, smarter and more energy efficient, sensors are able to send and transfer larger amounts of data.
+That is, distributed sensor networks create a large volume of data due to the abundance of IoT and mobile devices that make up DSNs. As communication infrastructures improve and hardware becomes smaller, smarter and more energy efficient, sensors are able to send and transfer larger amounts of data. The ease of building and deploying sensors in DSNs means that more sensors can be produced much more cheaply allowing for more sensors to be used within a DSN, increasing coverage, but also increasing the volume of data.
 
 Distributed sensor networks create a variety of data with different formats and data quality issues. Distributed sensor networks can produce data at high velocity. These characteristics of data produced from distributed sensor networks create a need for efficient architectures and specific algorithms designed for working with Big Data.
 
@@ -39,19 +41,19 @@ Detection is the algorithmic ability to detect signals of interest among a sea o
 
 Classification is the act of associating a signal with a known designation. 
 
-\subsection{Distributed Sensor Networks and Big Data}
-
 \section{The Data Management and Analysis Problems}
 
 \section{Traditional Approaches to Data Management and Analysis}
 
 \section{Seven proposed benefits of Laha} \label{laha-benefits}
+Laha is designed to adaptively optimize the collection, triggering, detection, and classification of signals within a DSN. 
+
 \subsection{Tiered management of Big Data}
 \subsection{Automatically provide context to classified incidents}
 \subsection{Adaptive optimizations for detection and classification}
 \subsection{Adaptive optimizations for triggering}
 \subsection{Provides a model of underlying sensor field topology}
-\subsection{Decreased bandwidth of entire DDS}
+\subsection{Decreased bandwidth of entire DSN}
 \subsection{Decreased energy usage from optimized communications and analysis}
 
 \section{Evaluation of Laha}
