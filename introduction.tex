@@ -9,9 +9,9 @@ Data can be collected from DSNs in various ways. Sensors can store data onboard 
 In some DSNs, data is routed between the sensors using various approaches % TODO cite this
 and eventually makes its way to a sink or sinks. A sink is a data collection node. Cloud computing has become a prevalent choice for DSNs sinks since they often provide the ability to provision resources as needed. Various approached have been proposed that minimize and optimize communications between sensors within a DSN. % TODO Cite this
 
-In other DSNs, sensor nodes have direct access to a sink, and instead of communicating with each other and passing messages among themselves, the nodes send their data directly to the sink. It's also possible that a DSN takes a hybrid approach and performs some communication within the network and some directly to the sink. 
+In other DSNs, sensor nodes have direct access to a sink, and instead of communicating with each other and passing messages among themselves, the nodes send their data directly to the sink. It's also possible that a DSN takes a hybrid approach and performs some communication within the network and some directly to the sink.
 
-Not only are there various approaches to routing data, but there are also various approaches to deciding what kind of data to send (or acquire). 
+Not only are there various approaches to routing data, but there are also various approaches to deciding what kind of data to send (or acquire).
 
 \subsection{DSN Detection Schemes}
 On one extreme end we have the send everything approach where each sensor sends its data to the sink all the time (or at least when it has the means to do). In this scenario, the sink is responsible for collection, cleaning, detection, and classification of signals and events within the data. This approach can be bandwidth and energy intensive but provides the benefit of allowing more complete analysis to occur beyond the sink where more computational resources exist. This provides more accurate results and allows the sink to examine the results in aggregate with the rest of the DSN.
@@ -20,7 +20,7 @@ The other extreme is that sensors only send data when they have detected a signa
 
 Often time a hybrid approach is taken where low fidelity feature extracted and sometimes aggregate data is sent from the sensors to the sink. The sink analyzes the low fidelity feature extracted stream to determine if raw data should be requested from the sensors. The act of requesting data from the sensors is called triggering. This approach is useful because we still gain bandwidth benefits and can easily gain an understanding of the global state of a network.
 
-With all of these factors combined, management, collection, detection, localization, and analysis from distributed sensor networks is not a trivial task. DSNs can produce massive amounts of data. The emergence of IoT has increased the heterogeneity of sensors with multiple hardware configurations, variations of data APIs, and incomplete or bad sensor data. For these reasons, the data collected from distributed sensor networks under certain circumstances is considered Big Data. 
+With all of these factors combined, management, collection, detection, localization, and analysis from distributed sensor networks is not a trivial task. DSNs can produce massive amounts of data. The emergence of IoT has increased the heterogeneity of sensors with multiple hardware configurations, variations of data APIs, and incomplete or bad sensor data. For these reasons, the data collected from distributed sensor networks under certain circumstances is considered Big Data.
 
 \subsection{DSN Classification Schemes}
 
@@ -37,24 +37,44 @@ This proposal focuses on identifying and tuning several aspects of distributed s
 
 Triggering is the act of monitoring low fidelity feature extracted data and triggering sensors for high fidelity data streams when abnormalities are seen in the triggering data stream.
 
-Detection is the algorithmic ability to detect signals of interest among a sea of background noise. Sensor networks often detect signals without knowing what they are or how to classify them. 
+Detection is the algorithmic ability to detect signals of interest among a sea of background noise. Sensor networks often detect signals without knowing what they are or how to classify them.
 
-Classification is the act of associating a signal with a known designation. 
+Classification is the act of associating a signal with a known designation.
 
 \section{The Data Management and Analysis Problems}
 
 \section{Traditional Approaches to Data Management and Analysis}
 
 \section{Seven proposed benefits of Laha} \label{laha-benefits}
-Laha is designed to adaptively optimize the collection, triggering, detection, and classification of signals within a DSN. 
+Laha is designed to adaptively optimize the collection, triggering, detection, and classification of signals within a DSN.
 
 \subsection{Tiered management of Big Data}
+Laha provides tiered management of the Big Data that the framework consumes. This is mainly accomplished using the layered approach that Laha provides. All data within the Laha framework is garbage collected using a configurable time to live (TTL) for each layer. As data moves from the bottom to the top of the framework, noise is discarded and only interesting data as determined by the higher layers is preserved and forwarded upwards within the framework. In this way, the network can be tuned to preserve increasingly important data. The details of Laha's tiered approach can be found in section \ref{big-data-management}.
+
 \subsection{Automatically provide context to classified incidents}
+
+
 \subsection{Adaptive optimizations for detection and classification}
+
+
 \subsection{Adaptive optimizations for triggering}
+
+
 \subsection{Provides a model of underlying sensor field topology}
+Predictive phenomena use localization of signals to build communities or groupings of sensors that observe similar signals in both time and space. Over time, Laha can begin to build a model of the underlying topology of the sensing field. For instance, if a group of sensors always see the same signal, then we can assume that either the signal has a far reach, or the sensors are grouped together geographically. With enough sensor penetration, we can differentiate between these two scenarios.
+
+Further, if the sensors provide any sort of location information, Laha can provide a mapping from physical location to sensor field topology. This is especially useful when the topology of the sensor field is not known a priori. For example, smart meters under Laha can build a model of an electrical grid which is generally only information that utilities can provide.
+
+
 \subsection{Decreased bandwidth of entire DSN}
+One of the tertiary benefits of optimizing triggering and classification is that we get decreased bandwidth usage for free. By improving triggering efficiency, its possible to trigger less devices for raw data when something interesting is observed in the triggering stream.
+
+Predictive phenomena allow us to target triggers to sensors that are most likely to have captured a signal of interest. For instance, if a geographical grouping of sensors tend to always observe the same signals of interest, then we can use that grouping to optimize triggering. Instead of triggering all devices in an area to search for the signal, we can trigger only on the specific grouping that is most likely have observed the signal. We can also selectively ignore sensors within a predictive grouping if Laha assumes that all sensors observed the signal, then we may only need to analyze the signal from one of the sensors rather than all of the sensors in the grouping.
+
 \subsection{Decreased energy usage from optimized communications and analysis}
+In general, sensors are both compute and energy constrained. Most of the time, communications are the main source of energy usage within a DSN.
+
+In an energy constrained DSN where communications amount for the most usage of energy, decreased bandwidth also provides decreased energy usage. This can prolong the life of DSN or allow energy usage for other parts of the network (such a pushing computations to the edge).
 
 \section{Evaluation of Laha}
 \subsection{Design and implement Laha-compliant software reference implementations (OPQMauka and Lokahi)}
@@ -74,7 +94,7 @@ OPQMauka is a distributed, plugin-based middleware component of the Open Power Q
 \subsection{2018 Q4: Implement, deploy, and validate Laha reference implementations}
 \subsection{2019 Q1: Begin validated data collection}
 \subsection{2019 Q2: Continue validated data collection, thesis chapters 1-3}
-\subsection{2019 Q3: Finish validated data collection, these chapters 4-6}
+\subsection{2019 Q3: Finish validated data collection, thesis chapters 4-6}
 
 
 
