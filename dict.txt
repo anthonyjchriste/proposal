@@ -38,4 +38,6 @@ Zigbee
 bluetooth
 APIs
 priori
-laha
+laha's
+Laha
+Laha's
