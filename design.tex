@@ -52,26 +52,31 @@ Phenomena are discussed in great detail in section \ref{phenomena}.
 \subsubsection{Annotations Phenomena} \label{annotations-phenomena}
 Annotations provide context about an Incident or a set of Incidents. Annotations are generally user provided or sourced from other data sources to provide supporting context to Incidents. For example, Annotations might include “Cloud Cover”, “Hurricane Hector”, “Dryer Turns On”, etc.
 
-In some sense, annotations allow us to label our data sets beyond a simple classification and start looking at causal classifications. These annotations can be used to attempt to label unknown incidents with similar characteristics.
+In some sense, annotations allow us to label our data sets beyond a simple classification and start looking at causal classifications. Once enough annotations have been assigned to classified incidents, Laha can used Annotations to attempt to label unknown incidents with similar characteristics.
+
+Annotations can be used to tune Laha's detection and classification algorithms by allowing Laha to filter on incidents with known causes.
 
 \subsubsection{Locality Phenomena} \label{locality-phenomena}
-Locality provides context on how incidents are related to each other in both space in time. Initially, we are looking to determine if detected incidents are local to a single sensor, to a group of co-located sensors, or global across the entire network. 
+Locality provides context on how incidents are related to each other in both space in time. Laha is able to determine if classified incidents are local to a single sensor, to a group of co-located sensors, or global across an entire network. Sensors can be co-located in both the physical sense and also co-located within a sensing field. For example, sensors in a power quality network may be separated by large distance geographically, but co-located through the electrical grid and the grid's topology. 
 
-Locality phenomena can be used to drive network detection and triggering thresholds within a  distributed sensor network.
+Over time, Locality Phenomena is used to build a model of sensors in relation to each other and to provide a statistical likelihood that co-located sensors will observe the same signal. Locality phenomena can be used to drive network triggering, detection, and classification thresholds within a distributed sensor network by using this probabilistic model for determining the likelihood that a sensor or sensors will observe a signal of interest.
 
 \subsubsection{Periodicity Phenomena} \label{periodicity-phenomena}
 Periodic phenomena consists of incidents that exhibit repetitive behavior, that is, the same types of incidents appearing in cycles from single or multiple devices. Periodicity allows for the easy creation of Predictive phenomena.
 
-Periodic phenomena can come from a single incident or from multiple incidents. Periodic phenomena allow us to either tune our network to find periodic incidents or tune the  network to ignore periodic incidents depending on if the incidents are interesting.
+Periodic phenomena can come from a single incident or from multiple incidents. Periodic phenomena allow us to either tune our network to find periodic incidents or tune the  network to ignore periodic incidents depending on if the incidents are of interest. Periodic phenomena are especially useful in conjunction with Annotation phenomena as we can assign causality to the periodic signal. 
 
 \subsubsection{Similarity Phenomena}
-Similarity phenomena utilize grouping algorithms to group incidents together by their features. Incidents can be grouped by time, location, incident type, or incident features.
+Similarity phenomena utilize grouping and community detection algorithms to group incidents together by their features. Common features used for grouping include time, location, incident type, or incident features.
+
+% TODO describe common community detection algorithms 
 
 \subsubsection{Predictive Phenomena}
-Predictive phenomena consists of incidents that are characterized by a predictive or forecasting model. Predictiveness is a behavior that can be inferred from all other phenomena types. 
+Predictive phenomena consists of incidents that are characterized by a predictive or forecasting models. Predictiveness is a behavior that can be inferred from all other phenomena types. 
 
-Predictiveness is the main driver behind optimizing the control of a distributed sensor network.
+Predictiveness is the main driver behind optimizing the control of a distributed sensor network. If we can predict the types of signals that will arrive at sensors, then we can tune those sensors and the sink to either filter the signals (if the user is not interested in signals) or tune the sensors and the sink to be extra sensitive to those signals, possible detecting them even if they previously would not have been detected.
 
 \subsubsection{Future Phenomena}
 Predictive phenomena can be used to create future phenomena. Future phenomena are a statistical model of the likelihood of seeing an incident or incidents at future points in time. Knowing that a signal may occur with some probability allows agents affected by those signals time to prepare for the signals.
 
+% TODO are these the same as predictive phenomena?
