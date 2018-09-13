@@ -33,20 +33,45 @@ The actual methods of detection is dependent on the characteristics of every ind
 Similar to other layers, the DL layer will have its IMs and AMs copied into layers above it when upper layers observe something interesting in the DL. The detections layer is set to have a TTL of a week.
 
 \subsubsection{Incidents Layer}
-The incidents layer provides industry standard context to collected data. This is generally provided in the form of classifications.
+Incidents represent classified signals. Incidents are individual classifications for signals of interest and are created by analyzing waveforms from Events. Waveforms from Events may contain multiple incidents. Individual signals may be classified as multiple incidents (for example a transient being classified as both a transient and frequency incidents). 
+
+Incidents are further analyzed to produce phenomena. 
+
+Incidents are expired after one year of storage. 
+
 
 \subsubsection{Phenomena Layer}
+Phenomena are defined as a grouping of incidents that provide one or more of annotations, locality, periodicity, predictiveness, similarity, and future phenomena. 
+
+Not only do Phenomena provide interesting insight and analytics into the underlying data, but they also provide a means for adaptively tuning the underlying collection, triggering, detection, and analysis of a distributed sensor network.
+
+Phenomena are discussed in great detail in section \ref{phenomena}.
 
 \subsection{Phenomena: Providing Adaptive Optimizations in Laha} \label{phenomena}
 
 \subsubsection{Annotations Phenomena} \label{annotations-phenomena}
+Annotations provide context about an Incident or a set of Incidents. Annotations are generally user provided or sourced from other data sources to provide supporting context to Incidents. For example, Annotations might include “Cloud Cover”, “Hurricane Hector”, “Dryer Turns On”, etc.
+
+In some sense, annotations allow us to label our data sets beyond a simple classification and start looking at causal classifications. These annotations can be used to attempt to label unknown incidents with similar characteristics.
 
 \subsubsection{Locality Phenomena} \label{locality-phenomena}
+Locality provides context on how incidents are related to each other in both space in time. Initially, we are looking to determine if detected incidents are local to a single sensor, to a group of co-located sensors, or global across the entire network. 
+
+Locality phenomena can be used to drive network detection and triggering thresholds within a  distributed sensor network.
 
 \subsubsection{Periodicity Phenomena} \label{periodicity-phenomena}
+Periodic phenomena consists of incidents that exhibit repetitive behavior, that is, the same types of incidents appearing in cycles from single or multiple devices. Periodicity allows for the easy creation of Predictive phenomena.
+
+Periodic phenomena can come from a single incident or from multiple incidents. Periodic phenomena allow us to either tune our network to find periodic incidents or tune the  network to ignore periodic incidents depending on if the incidents are interesting.
 
 \subsubsection{Similarity Phenomena}
+Similarity phenomena utilize grouping algorithms to group incidents together by their features. Incidents can be grouped by time, location, incident type, or incident features.
 
 \subsubsection{Predictive Phenomena}
+Predictive phenomena consists of incidents that are characterized by a predictive or forecasting model. Predictiveness is a behavior that can be inferred from all other phenomena types. 
+
+Predictiveness is the main driver behind optimizing the control of a distributed sensor network.
 
 \subsubsection{Future Phenomena}
+Predictive phenomena can be used to create future phenomena. Future phenomena are a statistical model of the likelihood of seeing an incident or incidents at future points in time. Knowing that a signal may occur with some probability allows agents affected by those signals time to prepare for the signals.
+

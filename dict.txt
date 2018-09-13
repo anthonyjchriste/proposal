@@ -43,3 +43,5 @@ Laha
 Laha's
 THD
 didn
+waveforms
+predictiveness
