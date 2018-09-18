@@ -73,9 +73,32 @@ Phenomena are defined as a grouping of incidents that provide one or more of ann
 
 Not only do Phenomena provide interesting insight and analytics into the underlying data, but they also provide a means for adaptively tuning the underlying collection, triggering, detection, and analysis of a distributed sensor network.
 
-Phenomena are discussed in great detail in section \ref{phenomena}.
+Phenomena are summarized in table \ref{phenomena-summary-table} and discussed in great detail in section \ref{phenomena}.
 
 \subsection{Phenomena: Providing Adaptive Optimizations in Laha} \label{phenomena}
+
+\begin{table}
+	\centering
+	\caption{Summary of Laha Phenomena}
+	\begin{tabular}{|c|c|}
+		\hline
+		Phenomena & Description \\
+		\hline
+		Annotations & Provide context about an Incident or set of incidents \\
+		\hline
+		Locality & Provides context on how incidents are related in time and space \\
+		\hline
+		Periodicity & Designation for incidents that exhibit repetitive or periodic behavior \\ 
+		\hline
+		Similarity & Subset of incidents found using grouping and community detection algorithms \\
+		\hline
+		Predictive & Subset of incidents characterized by predictive or forecasting models\\
+		\hline
+		Future & Incidents scheduled to occur in the future\\
+		\hline
+	\end{tabular}
+	\label{phenomena-summary-table}
+\end{table}
 
 \subsubsection{Annotations Phenomena} \label{annotations-phenomena}
 Annotations provide context about an Incident or a set of Incidents. Annotations are generally user provided or sourced from other data sources to provide supporting context to Incidents. For example, Annotations might include “Cloud Cover”, “Hurricane Hector”, “Dryer Turns On”, etc.
