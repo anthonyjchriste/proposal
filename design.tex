@@ -2,7 +2,14 @@
 
 Laha, which means, to spread or distribute in Hawaiian, is an abstract framework for distributed sensor networks that provides a means for big data management as well as augmenting a DSN with the ability to adaptively optimize its bandwidth, detection, classification, and energy usage.
 
-The Laha framework is made up of six layers that can be viewed conceptually as a pyramid. Data entering the Laha framework is located at the bottom the bottom of the pyramid. As data moves upward through the layers, noise is discarded, less interesting events are discarded or aggregated into upper layers, events are given more meaning and context, and associations and predictions are made. 
+The Laha framework is made up of five layers that can be viewed conceptually as a pyramid (see \ref{laha-figure}). Data entering the Laha framework is located at the bottom the bottom of the pyramid. As data moves upward through the layers, noise is discarded, less interesting events are discarded or aggregated into upper layers, events are given more meaning and context, and associations and predictions are made. 
+
+\begin{figure}
+\caption{Laha Conceptual Model}
+\centering
+\includegraphics{figures/laha.png}	
+\label{laha-figure}
+\end{figure}
 
 \subsection{Big Data Management in Laha} \label{big-data-management}
 The Laha framework acts as an adaptive sieve for filtering noise and uninteresting data collected from a DSN. In this way, each layer only passes what it considers interesting to the layer above it. All data at a particular layer is garbage collected at specific intervals relating to its important to the DSN.
