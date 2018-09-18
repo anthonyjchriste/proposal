@@ -5,7 +5,7 @@ Laha, which means, to spread or distribute in Hawaiian, is an abstract framework
 The Laha framework is made up of five layers that can be viewed conceptually as a pyramid (see \ref{laha-figure}). Data entering the Laha framework is located at the bottom the bottom of the pyramid. As data moves upward through the layers, noise is discarded, less interesting events are discarded or aggregated into upper layers, events are given more meaning and context, and associations and predictions are made. 
 
 \begin{figure}
-\caption{Laha Conceptual Model}
+\caption{Laha Conceptual Mode}
 \centering
 \includegraphics{figures/laha.png}	
 \label{laha-figure}
@@ -15,7 +15,28 @@ The Laha framework is made up of five layers that can be viewed conceptually as 
 The Laha framework acts as an adaptive sieve for filtering noise and uninteresting data collected from a DSN. In this way, each layer only passes what it considers interesting to the layer above it. All data at a particular layer is garbage collected at specific intervals relating to its important to the DSN.
 
 Each layer only keeps data for a specified amount of time before it is garbage collected. As data moves up the pyramid, it is generally considered more useful and therefore has a longer Time to Live (TTL), the amount of the time the data lives before it is garbage collected.  When a higher layer detects ``something interesting", the data contained in the time window of ``something interesting" is copied into the layers above it and will still persist even though the original data is garbage collected. In this way, we preserve data from all layers if they are associated with interesting data. 
-% TODO: Figure of Laha layers here
+
+A summary of how data management in Laha is provided in table \ref{data-managament-table}.
+
+\begin{table}
+	\caption{Summary of data management in Laha}
+	\begin{tabular}{|c|c|c|}
+		\hline 
+		Layer & Description & Time-to-Live (TTL) \\ 
+		\hline 
+		Phenomena Layer (PL) & Contextual \& predictive analytics &  \\ 
+		\hline 
+		Incidents Layer (IL) & Classified signals &  1 year \\ 
+		\hline 
+		Detections Layer (DL) & Triggered windowed raw data & 1 week  \\ 
+		\hline 
+		Aggregate Measurements Layer (AML) & Statistical aggregates of raw data  & 1 day  \\ 
+		\hline 
+		Instantaneous Measurements Layer (IML) & Raw sensor data  & 1 hour \\ 
+		\hline 
+	\end{tabular} 
+    \label{data-managament-table}
+\end{table}
 
 \subsubsection{Instantaneous Measurements Layer}
 The Instantaneous Measurements Layer (IML) receives raw, sampled data from the DSN. The amount of data received is determined by the sample rate of each device multiplied by the number of fields per sample. Most of the time samples, from devices in the network are mainly sampling noise. A large percentage of the data in this layer is destined for garbage collection and data is assigned a Time to Live (TTL) of one hour. 
