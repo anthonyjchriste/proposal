@@ -54,3 +54,9 @@ OPQView
 SBC
 NTP
 WiFi
+microgrid
+Kailua
+Garces
+renewables
+Kona
+Manoa's
