@@ -106,17 +106,33 @@ The OPQ network is a hybrid network that uses edge computing for calculating fea
 
 OPQBoxes are synchronized to each other and the OPQ back end using the network time protocol (NTP). This provides synchronization to the millisecond level, which although is great for longer incidents, does not provide accurate timing for transients that may be shorter than tens of milliseconds.
 
-% TODO Makai
+\subsubsection{OPQ: Makai}
+OPQMakai is the central sink and triggering daemon for the OPQ framework. Low fidelity feature extracted data ($V_{RMS}$, frequency, and THD) are streamed from OPQBoxes at a configurable message rate. These data streams are observed by OPQMakai and the daemon uses statistical methods and thresholds to determine if the sensor or a subset of sensors should be triggered for a window of raw sampled waveforms. 
 
+\subsubsection{OPQ: Health}
 % TODO Health
 
+\subsubsection{OPQ: View}
 % TODO View
 
+
+\subsubsection{OPQ: Mauka}
 % TODO Mauka
 
+\subsubsection{OPQ as a Laha-compliant DSN}
 % TODO How does mauka fit into Laha?
 
 \subsubsection{Lokahi}
+
+\subsubsection{Lokahi: Ingestion}
+
+\subsubsection{Lokahi: Persistence}
+
+\subsubsection{Lokahi: Analysis}
+
+\subsubsection{Lokahi: Web}
+
+\subsubsection{Lokahi as a Laha-compliant DSN}
 
 \subsection{Deploy Laha reference implementations on test sites}
 In Q4 2018, 10 to 20 Laha-compliant OPQBoxes will be deployed on the University of Hawaii at Manoa's power microgrid. Using a provided blueprint of the microgrid as a guide and collaborating with the Office of Energy Management, these sensors will be placed strategically with the hopes of observing PQ signals on the same line, PQ signals generated from intermittent renewables, local PQ signals, global PQ signals, and PQ signals near sensitive lab electronics. Many of these sensors will be co-located with industry standard PQ monitoring systems. The industry standard sensors provide both ground truth and a means of comparison between a Laha powered network and a normal DSN. 
