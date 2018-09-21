@@ -61,3 +61,6 @@ renewables
 Kona
 Manoa's
 makai
+mongo
+js
+manoa
