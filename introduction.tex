@@ -169,6 +169,8 @@ A screenshot of OPQView in action is provided in figure \ref{fig:opq-view}.
 \subsubsection{OPQ: Mauka}
 % TODO
 
+TODO: This section is in the making and will be much more detailed than the other components of OPQ.
+
 \subsubsection{OPQ: Data Model}
 % TODO
 
@@ -176,19 +178,45 @@ A screenshot of OPQView in action is provided in figure \ref{fig:opq-view}.
 % TODO
 
 \subsubsection{Lokahi}
-%TODO
+Lokahi is a dynamic DSN that originally evolved as a distributed infrasound detection network. Infrasound is characterized as sound waves that are less than 20 Hz. Infrasound generally can not be deciphered by the human ear, but it can be detected using microphone and barometric pressure sensors. Any large movements of the atmosphere can produce infrasound. The Lokahi network was designed to supplement the International Monitoring System (IMS) for the capture  of undeclared and declared nuclear explosions. Lokahi has been successfully used tp capture signals from volcanoes, hurricanes, aircraft, meteors, and other large atmospheric events. 
+
+Sensors in Lokahi are any mobile device that can run iOS or Android. We have sensors distributed world wide. The software stack for Lokahi consists of a distributed actor system for data acquisition, MongoDB for metadata persistence, Apache Kafka for data queues and interprocess communication, Python and related scientific libraries for analysis, and a distributed key-value store for long term storage or sensor data.
+
+Recent development and improvements to the data API have allowed Lokahi to begin accepting data from any of the available onboard sensors on iOS and Android devices. Even though the main focus is still infrasound, having access to all of the available sensors provides the ability to sense other sensor fields and to perform interesting data fusion techniques. 
+
+A diagram of the Lokahi framework is provided in figure \ref{fig:lokahi}.
+
+
+\begin{figure}
+	\centering
+	\includegraphics[width=\linewidth]{figures/lokahi.pdf}
+	\caption{Lokahi Design}\label{fig:lokahi}
+\end{figure}
 
 \subsubsection{Lokahi: Ingestion}
-%TODO
+Unlike OPQ, Lokahi takes an approach of send and store everything from every sensor, all the time. This approach is vastly different than what we're used to in triggering based acquisition systems. Data between sensors and our Ingestion servers is encrypted using standard SSL encryption algorithms. Authentication and authorization for each sensor is accomplished using Json Web Tokens (JWTs) with signatures generated using elliptic curve cryptography (ECC). Data at the sensor level is serialized using protocol buffers and then compressed using LZ4. 
+
+To enable the smooth retrieval of large amounts of sensor data, Lokahi uses a distributed actor system (Akka) to automatically scale horizontally based on the current volume of data being received. 
 
 \subsubsection{Lokahi: Persistence}
-%TODO
+Metadata is stripped from the sensor data at data ingestion and immediate stored to a distributed Mongo database. Metadata is indexed using a combination of device id and timestamps. 
+
+Metadata drives the rest of the Lokahi framework and provides pointers to the raw data.
+
+Raw sensor data is stored in a distributed key-value store. Lokahi uses Amazon's Simple Storage Service (S3) which provides automatic data redundancy and essentially limitless storage. Raw sensor data is stored by key and the key is stored in the metadata.
+
+Raw sensor data is also persisted in an Apache Kafka queue. Kafka not only provides the framework with a message queue to pass data between distributed services, but it also acts as a ring buffer. Each sensor stores 1 hours worth of data in Kafka that can be looked up by any of the distributed clients and retrieved very quickly. For those reasons, Kafka powers IPC and data buffering roles for our real time analysis of Lokahi sensor data streams.  
 
 \subsubsection{Lokahi: Analysis}
-%TODO
+Analysis in Lokahi is provided by a set of distributed processes that were developed in Python using SciPy, NumPy, and matplotlib. Recent developments in the framework are now also including the basis for machine learning (ML) using Tensor Flow.
+
+We provide real time plotting and analysis by subscribing to real time data feeds provided by the Apache Kafka real time queue and buffer. We also provide more robust batch analysis of historical data that can be initiated from Lokahi Web.
+
 
 \subsubsection{Lokahi: Web}
-%TODO
+Lokahi web is a web application for querying and performing analysis of real time sensor data or over historical sensor data. Lokahi also has built in system of health displays for providing a real-time and historic overview of the health of the distributed services within the framework. 
+
+% TODO, provide screenshot
 
 \subsubsection{Lokahi as a Laha-compliant DSN}
 %TODO
