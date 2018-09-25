@@ -90,3 +90,5 @@ NumPy
 IPC
 interprocess
 API
+algorithmically
+BNK
