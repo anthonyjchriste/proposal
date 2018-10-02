@@ -21,7 +21,7 @@ Often time a hybrid approach is taken where low fidelity feature extracted and s
 
 With all of these factors combined, management, collection, detection, localization, and analysis from distributed sensor networks is not a trivial task. DSNs can produce massive amounts of data. The emergence of IoT has increased the heterogeneity of sensors with multiple hardware configurations, variations of data APIs, and incomplete or bad sensor data. For these reasons, the data collected from distributed sensor networks under certain circumstances is considered Big Data.
 
-\subsection{DSN Classification Schemes}
+\subsection{DSN Classification Schemes}The following
 % TODO
 
 \subsection{DSNs as Big Data}
@@ -182,7 +182,34 @@ TODO: This section is in the making and will be much more detailed than the othe
 % TODO
 
 \subsubsection{OPQ as a Laha-compliant DSN}
-% TODO
+OPQ and specifically OPQMauka comply with the Laha abstract framework. Table \ref{opq-compliance} summarizes how the OPQ data architecture fits within the Laha conceptual model.
+
+\begin{table}
+	\caption{OPQ as a Laha-compliant DSN}
+	\begin{tabular}{|c|c|c|c|c|}
+		\hline 
+		Laha Layer & OPQ & Created By & Stored By & TTL \\ 
+		\hline 
+		IML & raw ADC Samples & OPQBox & Onboard memory & 20 minutes \\ 
+		\hline 
+		AML & min,max,avg V, F, THD & OPQBox & trends\footnotemark & 1 day \\ 
+		\hline 	
+		DL & triggered waveforms & Makai/Mauka & events/box\_events\textsuperscript{\ref{fn-1}} & 1 week \\
+		\hline
+		IL & Classified detections & Mauka & incidents\textsuperscript{\ref{fn-1}} & 1 year \\
+		\hline
+		PL & Predictive analytics & Mauka & phenomena\textsuperscript{\ref{fn-1}} & N/A \\
+		\hline
+	\end{tabular}
+
+\label{opq-compliance}
+\end{table}  
+\footnotetext{MongoDB Collection Name\label{fn-1}}
+
+In order to a Laha compliant DSN, the reference DSN must be able to optimize itself using the Phenomena layer. Next we describe the data flow and available optimizations to further describe how OPQ fits into Laha.
+
+OPQBoxes store raw ADC samples in a twenty minute ring buffer. OPQMakai monitors a low-fidelity stream of aggregate measurements and triggers OPQBoxes for raw data events. These events are fed into OPQMauka for high-level analysis to output incidents. Incidents are generated in OPQMauka and are kept within OPQMauka. Incidents classification can also trigger events from OPQBoxes. Incidents are used to generate Phenomena. Phenomena are then used to optimize the triggering and detection capabilities of OPQMakai and to optimize the classification and phenomena generation within OPQMauka. 
+
 
 \subsubsection{Lokahi}
 Lokahi is a dynamic DSN that originally evolved as a distributed infrasound detection network. Infrasound is characterized as sound waves that are less than 20 Hz. Infrasound generally can not be deciphered by the human ear, but it can be detected using microphone and barometric pressure sensors. Any large movements of the atmosphere can produce infrasound. The Lokahi network was designed to supplement the International Monitoring System (IMS) for the capture  of undeclared and declared nuclear explosions. Lokahi has been successfully used to capture signals from volcanoes, hurricanes, aircraft, meteors, and other large atmospheric events. 
