@@ -14,7 +14,11 @@
 
 
 \begin{abstract}
-I propose an abstract distributed sensor network framework, Laha, that adaptively optimizes triggering, collection, detection, classification, sensor device power requirements, and bandwidth. This is accomplished in the following way. First, Laha provides a data hierarchy whose levels represent the importance of data within a network. Laha uses the lower levels of this data hierarchy to simultaneously retain signals of interest and filter out sensor noise. Second, the top level of the Laha's data hierarchy, called ``Phenomena", goes beyond simple signal classification by providing predictive capabilities. Third, Laha can use information from the Phenomena level of the data hierarchy as a feedback mechanism to increase triggering efficiency, optimize signal detection, and decrease network sensor bandwidth and sensor device power requirements. A summary of the Laha abstract framework is provided as figure \ref{laha-abstract-overview}.
+I propose an abstract distributed sensor network framework, Laha, that adaptively optimizes triggering, collection, detection, classification, sensor device power requirements, and bandwidth. The Laha data model can be conceptualized as a multilevel pyramid (see fig. \ref{laha-abstract-overview}). Laha Actors act on the data model to move data upward through the levels and to apply optimizations downward through the levels. 
+
+The lowest level stores all recently received raw sensor data. This data expires and is automatically removed within a limited period of time (for example, 1 hour) unless the data is found to be interesting and is thus propagated upwards to the next level of the hierarchy.  Higher levels of the data hierarchy organize data in the same way, however each level adds context to the examined signal or signals. Context includes classifications, locality metrics, temporal metrics, or similarities to current or prior events. The highest level of the hierarchy, Phenomena, represents predictive capabilities of the sensor network which are then used to optimize and tune the lower levels.
+
+A summary of the Laha abstract framework is provided as figure \ref{laha-abstract-overview}.
 
 
 \begin{figure}
