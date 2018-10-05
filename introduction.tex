@@ -21,7 +21,7 @@ Often time a hybrid approach is taken where low fidelity feature extracted and s
 
 With all of these factors combined, management, collection, detection, localization, and analysis from distributed sensor networks is not a trivial task. DSNs can produce massive amounts of data. The emergence of IoT has increased the heterogeneity of sensors with multiple hardware configurations, variations of data APIs, and incomplete or bad sensor data. For these reasons, the data collected from distributed sensor networks under certain circumstances is considered Big Data.
 
-\subsection{DSN Classification Schemes}The following
+\subsection{DSN Classification Schemes}
 % TODO
 
 \subsection{DSNs as Big Data}
@@ -33,15 +33,8 @@ Distributed sensor networks create a variety of data with different formats and 
 
 Further, sensor networks are often constrained in both computing power and available energy sources. This forces us to find comprises between data collection, onboard sensor processing, sensor communication, and network coordination.
 
-This proposal focuses on identifying and tuning several aspects of distributed sensor networks.
-
-Triggering is the act of monitoring low fidelity feature extracted data and triggering sensors for high fidelity data streams when abnormalities are seen in the triggering data stream.
-
-Detection is the algorithmic ability to detect signals of interest among a sea of background noise. Sensor networks often detect signals without knowing what they are or how to classify them.
-
-Classification is the act of associating a signal with a known designation.
-
 \section{The Data Management and Analysis Problems}
+All DSNs must decide how data is managed and analyzed. There are various approaches 
 
 \section{Traditional Approaches to Data Management and Analysis}
 
@@ -201,15 +194,31 @@ OPQ and specifically OPQMauka comply with the Laha abstract framework. Table \re
 		PL & Predictive analytics & Mauka & phenomena\textsuperscript{\ref{fn-1}} & N/A \\
 		\hline
 	\end{tabular}
-
 \label{opq-compliance}
 \end{table}  
 \footnotetext{MongoDB Collection Name\label{fn-1}}
 
-In order to a Laha compliant DSN, the reference DSN must be able to optimize itself using the Phenomena layer. Next we describe the data flow and available optimizations to further describe how OPQ fits into Laha.
+In order to be a Laha compliant DSN, the reference DSN must also implement Laha Actors. Table \ref{opq-actors} summarizes how OPQ implements Laha actors.
 
-OPQBoxes store raw ADC samples in a twenty minute ring buffer. OPQMakai monitors a low-fidelity stream of aggregate measurements and triggers OPQBoxes for raw data events. These events are fed into OPQMauka for high-level analysis to output incidents. Incidents are generated in OPQMauka and are kept within OPQMauka. Incidents classification can also trigger events from OPQBoxes. Incidents are used to generate Phenomena. Phenomena are then used to optimize the triggering and detection capabilities of OPQMakai and to optimize the classification and phenomena generation within OPQMauka. 
-
+\begin{table}
+	\caption{OPQ  Actors Implementation}
+	\begin{tabular}{|c|c|c|}
+		\hline 
+		Laha Actors & OPQ Equivelent & Description \\ 
+		\hline
+		IML Actors & Boxes & Store window of raw sensor samples \\
+		\hline
+		AML Actors & Boxes \& Makai & Makai stores and triggers on aggregate data from Boxes \\
+		\hline
+		DL Actors & Mauka & MakaiEvent plugin \\
+		\hline
+		IL Actors & Mauka & Voltage, Frequency, THD, Outage, plugins \\
+		\hline
+		PL Actors & Mauka & Annotations, Locality, Similarity,  Periodic, Predictive,  Future plugins\\
+		\hline
+	\end{tabular}
+	\label{opq-actors}
+\end{table}  
 
 \subsubsection{Lokahi}
 Lokahi is a dynamic DSN that originally evolved as a distributed infrasound detection network. Infrasound is characterized as sound waves that are less than 20 Hz. Infrasound generally can not be deciphered by the human ear, but it can be detected using microphone and barometric pressure sensors. Any large movements of the atmosphere can produce infrasound. The Lokahi network was designed to supplement the International Monitoring System (IMS) for the capture  of undeclared and declared nuclear explosions. Lokahi has been successfully used to capture signals from volcanoes, hurricanes, aircraft, meteors, and other large atmospheric events. 
