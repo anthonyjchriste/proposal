@@ -20,8 +20,8 @@ if __name__ == "__main__":
         with open(tex_file, "r") as fin:
             for line_no, line in enumerate(fin.readlines()):
                 l = line.strip().lower()
-                if "% todo" in l or "%todo" in l:
-                    print("WARN: todo {}:{}".format(tex_file, line_no))
+                if "todo" in l:
+                    print("WARN: todo {}:{} -- {}".format(tex_file, line_no, line))
 
     if len(errors) > 0:
         print("Errors found...")
