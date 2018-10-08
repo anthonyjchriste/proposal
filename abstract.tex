@@ -20,17 +20,23 @@ The lowest level stores all recently received raw sensor data. This data expires
 
 A high level summary of the Laha abstract framework is provided as figure \ref{laha-abstract-overview}. The figure shows the levels and names of the hierarchy, a brief description of the functions of each level, and Laha's Actors and how they move data upwards (right hand side) and how they apply optimizations downwards (left hand side).
 
-
 \begin{figure}
 	\caption{Laha Conceptual Model Summary}
 	\centering
 	\includegraphics{figures/laha_abstract_overview.png}	
 	\label{laha-abstract-overview}
 \end{figure}
-%Laha's data hierarchy includes the following levels. At each level, we further refine the data which is forwarded to higher layers in the hierarchy and filter out sensor noise. The lowest level, the Instantaneous Measurements Layer (IML) receives raw, sampled data from the network and forwards aggregate measurements to the Aggregate Measurements Layer (AML). The AML consumes feature extracted data streams to provide triggers for possible signals of interest which are forwarded to the Detections Layer (DL). The DL receives raw data from a subset of network sensors corresponding to time windows as determined in the AML. The DL data is forwarded to the Incidents Layer (IL) where standard and state of the art algorithms are used to identify and classify signals of interest within the windows provided by the DL. Finally, data from the DL is forwarded to the Phenomenon Layer (PL) where context, causality, and predictive analytics are created. Phenomena are then used to adaptively tune and optimize the lower levels of the hierarchy.
 
-The Laha framework aims to provide seven useful benefits. Tiered management of Big Data where each tier has configurable time-to-live (TTL) requirements which provides a predicted upper bounds on bandwidth and storage requirements at the cost of potentially discarding important information. Automatically providing context to classified incidents based off of user and algorithmically tagged incidents. Adaptive optimization of triggering within the network to decrease bandwidth and increase accuracy. Adaptive optimizations for detection and classification algorithms power by Laha's Phenomena. Building of a model of the underlying sensor field topology by observing how signals travel and are received across multiple devices. Decreased bandwidth throughout the DSN as result of increased triggering, detection, and classification efficiency. Finally, minimizing of power sensor requirements as a result of increased triggering, detection, and classification efficiency. 
-
+The Laha framework aims to provide seven useful benefits. 
+\begin{enumerate}
+	\item Tiered management of Big Data where each tier has configurable time-to-live (TTL) requirements which provides a predicted upper bounds on bandwidth and storage requirements at the cost of potentially discarding important information.
+	\item Automatically providing context to classified incidents based off of user and algorithmically tagged incidents. Adaptive optimization of triggering within the network to decrease bandwidth and increase accuracy.
+	\item Adaptive optimizations for detection and classification algorithms power by Laha's Phenomena.
+	\item Building of a model of the underlying sensor field topology by observing how signals travel and are received across multiple devices.
+	\item Decreased bandwidth throughout the DSN as result of increased triggering, detection, and classification efficiency.
+	\item Finally, minimizing of power sensor requirements as a result of increased triggering, detection, and classification efficiency. 
+\end{enumerate}
+    
 Laha will be evaluated by designing and implementing two Laha-compliant reference implementations, OPQMauka and Lokahi. Open Power Quality (OPQ) is a power quality (PQ) network consisting of custom hardware and distributed software services that detect distributed PQ signals such as voltage sags and swells, frequency sags and swells, transients, THD, and other known PQ issues. OPQMauka is a distributed, plugin based middleware component of OPQ that performs higher level analysis, data management, and optimizations of the OPQ services. Lokahi is a distributed infrasound network consisting of mobile iOS and Android devices and multiple cloud based software services whose purpose is to supplement the International Monitoring System (IMS) in detecting large infrasound signals. 
 
 The reference implementations will be deployed to test sites at UH Manoa and at the Infrasound Laboratory in Kailua-Kona, Big Island. 
