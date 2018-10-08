@@ -38,67 +38,58 @@ All DSNs must decide how data is managed and analyzed. There are various approac
 
 \section{Traditional Approaches to Data Management and Analysis}
 
-\section{Seven proposed benefits of Laha} \label{laha-benefits}
-Laha is designed to adaptively optimize the collection, triggering, detection, and classification of signals within a DSN. These optimizations provide several benefits to DSNs.
+\section{Laha}
+I propose an abstract distributed sensor network framework, Laha, that adaptively optimizes triggering, collection, detection, classification, sensor device power requirements, and bandwidth. The Laha data model can be conceptualized as a multilevel pyramid (see fig. \ref{laha-abstract-overview}). Laha Actors act on the data model to move data upward through the levels and to apply optimizations downward through the levels.
 
-\subsection{Tiered management of Big Data}
-% TODO If you're going to use "Big Data" as a term of art, then it needs to be rigorously defined.
-% TODO What I think you need to emphasize here is that in any Big Data scenario, you simply can't keep all the data around forever. So, what approach will be used to decide what data to keep and what data to discard?  Laha addresses this problem by having a series of levels, each with its own TTL.  This approach has the benefit of simplifying the analysis of bandwidth and storage requirements for a DSN, but at the cost of potentially discarding important data due to the "use it or lose it" design.  Part of youer evaluation should attempt to address this weakness of use it or lose it.
+The lowest level stores all recently received raw sensor data. This data expires and is automatically removed within a limited period of time (for example, 1 hour) unless the data is found to be interesting and is thus propagated upwards to the next level of the hierarchy.  Higher levels of the data hierarchy organize data in the same way, however each level adds context to the examined signal or signals. Context includes classifications, locality metrics, temporal metrics, or similarities to current or prior signals of interest. The highest level of the hierarchy, Phenomena, represents predictive capabilities of the sensor network which are then used to optimize and tune the lower levels.
 
-Laha provides tiered management of the Big Data that the framework consumes. This is mainly accomplished using the layered approach that Laha provides. All data within the Laha framework is garbage collected using a configurable time to live (TTL) for each layer. As data moves from the bottom to the top of the framework, noise is discarded and only interesting data as determined by the higher layers is preserved and forwarded upwards within the framework. In this way, the network can be tuned to preserve increasingly important data. The details of Laha's tiered approach can be found in section \ref{big-data-management}.
+A high level summary of the Laha abstract framework is provided as figure \ref{laha-abstract-overview}. The figure shows the levels and names of the hierarchy, a brief description of the functions of each level, and Laha's Actors and how they move data upwards (right hand side) and how they apply optimizations downwards (left hand side).
 
-\subsection{Automatically provide context to classified incidents}
-% TODO This is a feature that will be hopefully much more easily evaluated once you have the two reference implementations.  I will be interested to see what kinds of contextual information are attached, and whether there are times you wished you could attach information elsewhere.
-Laha provides Annotations Phenomena (see \ref{annotations-phenomena}) that allows users or algorithms to tag signals of interest with contextual information. There is already a large amount of research for providing classifications of signals of interest, however annotations provide context about the classifications themselves. That is, Laha provides the ability to assign causality to already classified signals.
+\begin{figure}
+	\caption{Laha Conceptual Model Summary}
+	\centering
+	\includegraphics{figures/laha_abstract_overview.png}
+	\label{laha-abstract-overview}
+\end{figure}
 
-Initially, a library of annotations is required to be built for a particular DSN. Once the library has been built, Laha can provide automatic annotation assignment using similarity metrics. By using annotations and determining causality, it's possible to create actionable responses to signals observed within a network.
+The Laha framework aims to provide seven useful benefits.
+\begin{enumerate}
+	\item Tiered management of Big Data where each tier has configurable time-to-live (TTL) requirements which provides a predicted upper bounds on bandwidth and storage requirements at the cost of potentially discarding important information.
+	\item Automatically providing context to classified incidents based off of user and algorithmically tagged incidents. 
+	\item Adaptive optimization of triggering within the network to decrease bandwidth and increase accuracy.
+	\item Adaptive optimizations for detection and classification algorithms power by Laha's Phenomena.
+	\item Building of a model of the underlying sensor field topology by observing how signals travel and are received across multiple devices.
+	\item Decreased bandwidth throughout the DSN as result of increased triggering, detection, and classification efficiency.
+	\item Finally, minimizing of power sensor requirements as a result of increased triggering, detection, and classification efficiency.
+\end{enumerate}
 
-Further, annotations can be used to optimize detection and classification of known signals. For example, imagine a power quality network that observes a voltage sag on the same sensors at the same time periodically. If the cause of the voltage sag can be determined (such as a motor turning on), then detection of this signal can either be muted or analyzed more deeply. Also, other voltage sags that exhibit similar characteristics can then be automatically annotated.
+Laha will be evaluated by designing and implementing two Laha-compliant reference implementations, OPQMauka and Lokahi. Open Power Quality (OPQ) is a power quality (PQ) network consisting of custom hardware and distributed software services that detect distributed PQ signals such as voltage sags and swells, frequency sags and swells, transients, THD, and other known PQ issues. OPQMauka is a distributed, plugin based middleware component of OPQ that performs higher level analysis, data management, and optimizations of the OPQ services. Lokahi is a distributed infrasound network consisting of mobile iOS and Android devices and multiple cloud based software services whose purpose is to supplement the International Monitoring System (IMS) in detecting large infrasound signals.
 
-\subsection{Adaptive optimizations for triggering}
-% TODO This seems totally cool, but I question whether this is a novel feature. Adaptive setting of thresholds must happen in lots of different domains.  You'll want to discuss related work here, and hopefully argue that other approaches are ad-hoc and domain-specific, but the contribution of Laha is to build adaptive optimization of triggering directly into the framework as a first-class concept. 
-Many triggering schemes rely on thresholds being surpassed within feature extracted data streams. For example, triggered data streams in a power quality network might consist of voltage, frequency, and THD extracted features to determine if there is likely a signal of interest observed from a given set of sensors. If any of the extracted features surpass a preset threshold, then we  end up triggering the devices for raw, higher fidelity data. However, there are cases where the feature extracted stream may not surpass a predefined threshold and those sensors would not be triggered.
+The reference implementations will be designed and deployed to test sites at UH Manoa and at the Infrasound Laboratory in Kailua-Kona, Big Island during Q4 2018. 
 
-By using different types of Phenomena, we can improve our triggering efficiency. For example, Locality Phenomena, as discussed in section \ref{locality-phenomena}, allow us to predict detections and classifications in space. If a particular grouping of sensors that are related in space always observe the same detections and classifications, then we can build a predictive model of when the framework can expect to see those things. In this way, a sensor may trigger on a passed threshold, but other sensors that are co-located may not trigger because feature extracted data is below the triggering threshold. If the Locality Phenomena predicts that other co-located sensors should have detected the same signal, then we might trigger those devices for high fidelity data to determine if the signal is in the raw data stream even though it didn't meet the triggering threshold.
+Data collected from the PQ network will be validated against calibrated reference sensors that have already been installed at the power mains of a subset of buildings on campus during Q1 of 2019. The Office of Energy Management at UH Manoa has given us full access to live and historic PQ data collected at these reference sensors. OPQBoxes will be co-located and placed in buildings with the reference sensors so that we can validate that the triggering and raw data streams we receive from the OPQBoxes are in line with what the reference sensors are observing.
 
-Laha can use Periodicity Phenomena, as discussed in section \ref{periodicity-phenomena}, in similar ways. When periodic signals are classified, we can create Future Phenomena that predicts when signals of interest should be detected and classified. This allows Laha to optimize triggering by tuning the triggers to specifically look for Periodic or Future Phenomena. Periodic and Future Phenomena also allows Laha to tune classification algorithms to the predicted classifications.
+Data collected from the infrasound network will also be validated against industry standard calibrated BNK infrasound sensors. Further, signals in the infrasound network are known a priori since I am able to control the signals that are generated from our calibrated infrasound source, allowing further validation of received signals.
 
-\subsection{Adaptive optimizations for detection and classification}
-Not only can Laha optimize triggering, but similar usages of Locality and Future phenomena can be utilized to improve detection and classification efficiency. With Locality Phenomena, a model of common detections and classifications can be built for a set of co-located sensors. Detection and classification algorithms can be tuned to search for specific signals that are often observed within this model, pruning the search space and increasing the accuracy of detection and classification algorithms.
+To evaluate the seven benefits from Laha, several different approaches are taken depending on the Laha deployment and the benefit being evaluated. In the UH Manoa PQ deployment, we will co-locate sensors in our deployment and for each metric, one of the sensors will use Laha's optimizations and the other sensor will not. This will provide metrics that allows us to compare and contrast our optimization techniques within the OPQ network. 
 
-Future and Periodic Phenomena provide the same benefits to detection and classification as Locality Phenomena. That is, if Laha is able to predict when a signal is going to arrive and also predict how that signal is going to be classified, then it can tune its detection and classification algorithms specifically for the signal of interest.
+In the Lokahi infrasound network, we will run a series of experiments where we can produce the same infrasound signals in each experiment and only change the tuning and optimizations that Laha applies to generate metrics for evaluation within the Laha network.
 
-\subsection{Provides a model of underlying sensor field topology}
-% TODO Either this is extremely cool, or totally frivolous, and I'm not sure which. it is frivolous if the only thing it's doing is detecting topology that you already know about (i.e. that two OPQ boxes are close together physically, but we already know that because of their lat/long coordinates.) it is totally cool if you are detecting topology that is not already known. So, it would be good to provide a specific example here for both domains (OPQ and Lokahi)
+When evaluating the seven proposed benefits of Laha, I will specifically look at the following metrics. For the tiered management of Big Data, I will measure the total amount of data saved and discarded at each level of the Laha data hierarchy while providing an upper bound of required storage for the given state of the network. This will be compared against other Big Data management techniques such as (TODO: other techniques).
 
-Predictive phenomena use localization of signals to build communities or groupings of sensors that observe similar signals in both time and space. Over time, Laha can begin to build a model of the underlying topology of the sensing field. For instance, if a group of sensors always see the same signal, then we can assume that either the signal has a far reach, or the sensors are grouped together geographically. With enough sensor penetration, we can differentiate between these two scenarios.
+% TODO provide name of industry standard OPQ sensors for validation
+% TODO How do we evaluate the data?
 
-Further, if the sensors provide any sort of location information, Laha can provide a mapping from physical location to sensor field topology. This is especially useful when the topology of the sensor field is not known a priori. Even if we know the location of the sensors at all times, that does not mean that we understand the topology of the sensing field. For example, in a PQ network, the topology is defined by how the electrical grid is connected to itself and laid out. Laha hopes to provide a model that can determine the electrical distance between devices even if the topology of the grid is not known. As another example, take an infrasound network. It's possible that two sensors are located close to each other geographically, but if they have a large mass between them, they may not receive the same signals due to the topology of the environment around them. 
+I expect to deploy reference implementations before the end of 2018 with validated data collection beginning and continuing through Q3 2019. I anticipate writing my dissertation along side the deployment and data collection process and to be finished in Q3 2019.
 
-In this sense, Laha is not interested in knowing the location of sensors relative to each other, but is more interested in understanding how signals flow between sensors as a constraint on the topology that the signals travel through.
+\section{Anticipated contributions of Laha}
+Laha hopes to make the following four contributions to the areas of DSNs and specially optimization and management of DSNs.  First, the Laha design, a novel abstract distributed sensor network that provides seven useful properties relating to data management, triggering, detection, classification, sensing field topology, predictive analytics, and self-optimization.
 
+Second, an evaluation of the Laha abstract framework through the deployment of two Laha-compliant reference implementations, validated data collection, and several experiments that are used to either confirm or deny the benefits touted by Laha. 
 
-\subsection{Decreased bandwidth of entire DSN}
-One of the tertiary benefits of optimizing triggering and classification is that we get decreased bandwidth usage for free. By improving triggering efficiency, its possible to trigger less devices for raw data when something interesting is observed in the triggering stream.
+Third, two Laha-compliant reference implementations, OPQ and Lokahi, which can be used to form DSNs for the collection of distributed power quality signals and the distributed collection of infrasound signals.
 
-Predictive phenomena allow us to target triggers to sensors that are most likely to have captured a signal of interest. For instance, if a geographical grouping of sensors tend to always observe the same signals of interest, then we can use that grouping to optimize triggering. Instead of triggering all devices in an area to search for the signal, we can trigger only on the specific grouping that is most likely have observed the signal. We can also selectively ignore sensors within a predictive grouping if Laha assumes that all sensors observed the signal, then we may only need to analyze the signal from one of the sensors rather than all of the sensors in the grouping.
-
-\subsection{Minimizing sensor power requirements}
-In general, sensors are both compute and energy constrained. Most of the time, communications are the main source of sensor device power requirements within a DSN.
-
-In an energy constrained DSN where communications amount for the most usage of energy, decreased bandwidth also provides decreased sensor device power requirements. This can prolong the life of DSNs or provide more energy for other parts of the network (such a pushing computations to the edge).
-
-\section{Anticipated contributions of this thesis}
-\subsection{Laha design: a novel distributed sensor network adaptive design with seven useful properties}
-\subsection{Laha evaluation: empirical data to confirm or deny the seven useful properties}
-\subsection{OPQMauka and Lokahi: reference implementations of Laha}
-\subsection{Implications for modern distributed sensor networks}
-
-\section{Timeline}
-\subsection{2018 Q4: Implement, deploy, and validate Laha reference implementations}
-\subsection{2019 Q1: Begin validated data collection}
-\subsection{2019 Q2: Continue validated data collection, thesis chapters 1-3}
-\subsection{2019 Q3: Finish validated data collection, thesis chapters 4-6}
+Fourth, a set of implications for modern distributed sensor networks as a result of the evaluation of Laha. That is, how does the confirmation of denial of Laha's benefits affect the field of modern DSNs moving forward?
 
 
 
