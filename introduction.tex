@@ -79,13 +79,13 @@ When evaluating the five proposed benefits of Laha, I will specifically look at 
 
 For the tiered management of Big Data, I will measure the total amount of data saved and discarded at each level of the Laha data hierarchy while providing an upper bound of required storage for the given state of the network. I will also look at how the number of false positives and false negatives change when using Laha's tiered data management versus a ``store everything" approach. 
 
-When evaluating automatically provided context of classified incident I will TODO.
+When evaluating automatically provided context of classified incident I will measure the number of Incidents that are correctly identified or not identified as a metric of false positives and false negatives respectively.
 
 In order to evaluate optimization of triggering, I will measure false positives and false negatives of triggered events. I will also evaluate if optimized triggering provides any benefits to overall bandwidth usage and sensor power requirements of the DSN.
 
-To evaluate optimization of classification I will TODO.
+To evaluate optimization of detection and classification of Incidents I will measure the signal-to-noise ration of detection windows to determine if optimizing of detections increases the signal-to-noise ration. To evaluate classifications of Incidents, I will record the number of false positives and false negative when the network is optimized versus when the network in unoptimized.
 
-Finally, to evaluate sensor field topology, I will collect TODO. 
+Finally, to evaluate sensor field topology, Laha will output a statistical model of signals distances between every pair of sensors in the DSN. These distances will be compared to the ground truth signal distances provided before hand. If  Laha is able determine the sensing field topology, I will evaluate if the model can be used to further refine and optimize lower levels of the Laha hierarchy.
 
 % TODO provide name of industry standard OPQ sensors for validation
 
