@@ -10,7 +10,7 @@ The Laha framework is made up of five layers that can be viewed conceptually as 
 \label{laha-figure}
 \end{figure}
 
-\section{Seven proposed benefits of Laha} \label{laha-benefits}
+\section{Five proposed benefits of Laha} \label{laha-benefits}
 Laha is designed to adaptively optimize the collection, triggering, detection, and classification of signals within a DSN. These optimizations provide several benefits to DSNs. Many of these benefits can be found in other DSNs, but generally only appear as a single optimization (TODO: CITE) or as a subset of optimizations (TODO: CITE). Laha is the first DSN to combine all of these benefits for the purpose of auto-optimizing the network.
 
 \subsection{Tiered management of Big Data}
@@ -54,11 +54,6 @@ In this sense, Laha is not interested in knowing the location of sensors relativ
 One of the tertiary benefits of optimizing triggering and classification is that we get decreased bandwidth usage for free. By improving triggering efficiency, its possible to trigger less devices for raw data when something interesting is observed in the triggering stream.
 
 Predictive phenomena allow us to target triggers to sensors that are most likely to have captured a signal of interest. For instance, if a geographical grouping of sensors tend to always observe the same signals of interest, then we can use that grouping to optimize triggering. Instead of triggering all devices in an area to search for the signal, we can trigger only on the specific grouping that is most likely have observed the signal. We can also selectively ignore sensors within a predictive grouping if Laha assumes that all sensors observed the signal, then we may only need to analyze the signal from one of the sensors rather than all of the sensors in the grouping.
-
-\subsection{Minimizing sensor power requirements}
-In general, sensors are both compute and energy constrained. Most of the time, communications are the main source of sensor device power requirements within a DSN.
-
-In an energy constrained DSN where communications amount for the most usage of energy, decreased bandwidth also provides decreased sensor device power requirements. This can prolong the life of DSNs or provide more energy for other parts of the network (such a pushing computations to the edge).
 
 \section{Big Data Management in Laha} \label{big-data-management}
 The Laha framework acts as an adaptive sieve for filtering noise and uninteresting data collected from a DSN. In this way, each layer only passes what it considers interesting to the layer above it. All data at a particular layer is garbage collected at specific intervals relating to its important to the DSN.

@@ -1,5 +1,7 @@
 \chapter{Introduction}
 
+TODO: What is the big picture problem?
+
 \section{Overview of Distributed Sensor Networks}
 Distributed sensor networks (DSNs) consist of any number of sensors that collect and sense information about the physical environment around them. The sensors that make up these networks can either be homogeneous or heterogeneous. Distributed sensor networks are dynamic in that sensors can be added or removed from the network at any time. DSNs also increasingly include mobile sensors as well. With the onset of the Internet of Things (IoT), its easier than ever to build and deploy distributed sensor networks. Further, mobile devices, such as mobile phones, are seeing increased usage as intelligent sensing agents.
 
@@ -52,15 +54,13 @@ A high level summary of the Laha abstract framework is provided as figure \ref{l
 	\label{laha-abstract-overview}
 \end{figure}
 
-The Laha framework aims to provide seven useful benefits.
+The Laha framework aims to provide five useful benefits.
 \begin{enumerate}
 	\item Tiered management of Big Data where each tier has configurable time-to-live (TTL) requirements which provides a predicted upper bounds on bandwidth and storage requirements at the cost of potentially discarding important information.
 	\item Automatically providing context to classified incidents based off of user and algorithmically tagged incidents. 
 	\item Adaptive optimization of triggering within the network to decrease bandwidth and increase accuracy.
 	\item Adaptive optimizations for detection and classification algorithms power by Laha's Phenomena.
 	\item Building of a model of the underlying sensor field topology by observing how signals travel and are received across multiple devices.
-	\item Decreased bandwidth throughout the DSN as result of increased triggering, detection, and classification efficiency.
-	\item Finally, minimizing of power sensor requirements as a result of increased triggering, detection, and classification efficiency.
 \end{enumerate}
 
 Laha will be evaluated by designing and implementing two Laha-compliant reference implementations, OPQMauka and Lokahi. Open Power Quality (OPQ) is a power quality (PQ) network consisting of custom hardware and distributed software services that detect distributed PQ signals such as voltage sags and swells, frequency sags and swells, transients, THD, and other known PQ issues. OPQMauka is a distributed, plugin based middleware component of OPQ that performs higher level analysis, data management, and optimizations of the OPQ services. Lokahi is a distributed infrasound network consisting of mobile iOS and Android devices and multiple cloud based software services whose purpose is to supplement the International Monitoring System (IMS) in detecting large infrasound signals.
@@ -71,19 +71,28 @@ Data collected from the PQ network will be validated against calibrated referenc
 
 Data collected from the infrasound network will also be validated against industry standard calibrated BNK infrasound sensors. Further, signals in the infrasound network are known a priori since I am able to control the signals that are generated from our calibrated infrasound source, allowing further validation of received signals.
 
-To evaluate the seven benefits from Laha, several different approaches are taken depending on the Laha deployment and the benefit being evaluated. In the UH Manoa PQ deployment, we will co-locate sensors in our deployment and for each metric, one of the sensors will use Laha's optimizations and the other sensor will not. This will provide metrics that allows us to compare and contrast our optimization techniques within the OPQ network. 
+To evaluate the five benefits from Laha, several different approaches are taken depending on the Laha deployment and the benefit being evaluated. In the UH Manoa PQ deployment, we will co-locate sensors in our deployment and for each metric, one of the sensors will use Laha's optimizations and the other sensor will not. This will provide metrics that allows us to compare and contrast our optimization techniques within the OPQ network. 
 
 In the Lokahi infrasound network, we will run a series of experiments where we can produce the same infrasound signals in each experiment and only change the tuning and optimizations that Laha applies to generate metrics for evaluation within the Laha network.
 
-When evaluating the seven proposed benefits of Laha, I will specifically look at the following metrics. For the tiered management of Big Data, I will measure the total amount of data saved and discarded at each level of the Laha data hierarchy while providing an upper bound of required storage for the given state of the network. This will be compared against other Big Data management techniques such as (TODO: other techniques).
+When evaluating the five proposed benefits of Laha, I will specifically look at the following metrics. 
+
+For the tiered management of Big Data, I will measure the total amount of data saved and discarded at each level of the Laha data hierarchy while providing an upper bound of required storage for the given state of the network. I will also look at how the number of false positives and false negatives change when using Laha's tiered data management versus a ``store everything" approach. 
+
+When evaluating automatically provided context of classified incident I will TODO.
+
+In order to evaluate optimization of triggering, I will measure false positives and false negatives of triggered events. I will also evaluate if optimized triggering provides any benefits to overall bandwidth usage and sensor power requirements of the DSN.
+
+To evaluate optimization of classification I will TODO.
+
+Finally, to evaluate sensor field topology, we will collect TODO. 
 
 % TODO provide name of industry standard OPQ sensors for validation
-% TODO How do we evaluate the data?
 
 I expect to deploy reference implementations before the end of 2018 with validated data collection beginning and continuing through Q3 2019. I anticipate writing my dissertation along side the deployment and data collection process and to be finished in Q3 2019.
 
 \section{Anticipated contributions of Laha}
-Laha hopes to make the following four contributions to the areas of DSNs and specially optimization and management of DSNs.  First, the Laha design, a novel abstract distributed sensor network that provides seven useful properties relating to data management, triggering, detection, classification, sensing field topology, predictive analytics, and self-optimization.
+Laha hopes to make the following four contributions to the areas of DSNs and specially optimization and management of DSNs.  First, the Laha design, a novel abstract distributed sensor network that provides five useful properties relating to data management, triggering, detection, classification, sensing field topology, predictive analytics, and self-optimization.
 
 Second, an evaluation of the Laha abstract framework through the deployment of two Laha-compliant reference implementations, validated data collection, and several experiments that are used to either confirm or deny the benefits touted by Laha. 
 
