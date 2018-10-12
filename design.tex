@@ -1,7 +1,7 @@
 \chapter{System Design}
 Laha, which means, to spread or distribute in Hawaiian, is an abstract framework for distributed sensor networks that provides a means for big data management as well as augmenting a DSN with the ability to adaptively optimize its bandwidth, detection, classification, and sensor device power requirements.
 
-The Laha framework is made up of five layers that can be viewed conceptually as a pyramid (see \ref{laha-figure}). Data entering the Laha framework is located at the bottom the bottom of the pyramid. As data moves upward through the layers, noise is discarded, less interesting events are discarded or aggregated into upper layers, events are given more meaning and context, and associations and predictions are made. 
+The Laha framework is made up of five levels that can be viewed conceptually as a pyramid (see \ref{laha-figure}). Data entering the Laha framework is located at the bottom the bottom of the pyramid. As data moves upward through the levels, noise is discarded, less interesting events are discarded or aggregated into upper levels, events are given more meaning and context, and associations and predictions are made. 
 
 \begin{figure}
 \caption{Laha Conceptual Model}
@@ -17,7 +17,7 @@ Laha is designed to adaptively optimize the collection, triggering, detection, a
 % TODO If you're going to use "Big Data" as a term of art, then it needs to be rigorously defined.
 % TODO What I think you need to emphasize here is that in any Big Data scenario, you simply can't keep all the data around forever. So, what approach will be used to decide what data to keep and what data to discard?  Laha addresses this problem by having a series of levels, each with its own TTL.  This approach has the benefit of simplifying the analysis of bandwidth and storage requirements for a DSN, but at the cost of potentially discarding important data due to the "use it or lose it" design.  Part of youer evaluation should attempt to address this weakness of use it or lose it.
 
-Laha provides tiered management of the Big Data that the framework consumes. This is mainly accomplished using the layered approach that Laha provides. All data within the Laha framework is garbage collected using a configurable time to live (TTL) for each layer. As data moves from the bottom to the top of the framework, noise is discarded and only interesting data as determined by the higher layers is preserved and forwarded upwards within the framework. In this way, the network can be tuned to preserve increasingly important data. The details of Laha's tiered approach can be found in section \ref{big-data-management}.
+Laha provides tiered management of the Big Data that the framework consumes. This is mainly accomplished using the layered approach that Laha provides. All data within the Laha framework is garbage collected using a configurable time to live (TTL) for each level. As data moves from the bottom to the top of the framework, noise is discarded and only interesting data as determined by the higher levels is preserved and forwarded upwards within the framework. In this way, the network can be tuned to preserve increasingly important data. The details of Laha's tiered approach can be found in section \ref{big-data-management}.
 
 \subsection{Automatically provide context to classified incidents}
 % TODO This is a feature that will be hopefully much more easily evaluated once you have the two reference implementations.  I will be interested to see what kinds of contextual information are attached, and whether there are times you wished you could attach information elsewhere.
@@ -29,11 +29,11 @@ Further, annotations can be used to optimize detection and classification of kno
 
 \subsection{Adaptive optimizations for triggering}
 % TODO This seems totally cool, but I question whether this is a novel feature. Adaptive setting of thresholds must happen in lots of different domains.  You'll want to discuss related work here, and hopefully argue that other approaches are ad-hoc and domain-specific, but the contribution of Laha is to build adaptive optimization of triggering directly into the framework as a first-class concept. 
-Many triggering schemes rely on thresholds being surpassed within feature extracted data streams. For example, triggered data streams in a power quality network might consist of voltage, frequency, and THD extracted features to determine if there is likely a signal of interest observed from a given set of sensors. If any of the extracted features surpass a preset threshold, then we  end up triggering the devices for raw, higher fidelity data. However, there are cases where the feature extracted stream may not surpass a predefined threshold and those sensors would not be triggered.
+Many triggering schemes rely on thresholds being surpassed within feature extracted data streams. For example, triggered data streams in a power quality network might consist of voltage, frequency, and THD extracted features to determine if there is likely a signal of interest observed from a given set of sensors. If any of the extracted features surpass a preset threshold, then we end up triggering the devices for raw, higher fidelity data. However, there are cases where the feature extracted stream may not surpass a predefined threshold and those sensors would not be triggered.
 
-By using different types of Phenomena, we can improve our triggering efficiency. For example, Locality Phenomena, as discussed in section \ref{locality-phenomena}, allow us to predict detections and classifications in space. If a particular grouping of sensors that are related in space always observe the same detections and classifications, then we can build a predictive model of when the framework can expect to see those things. In this way, a sensor may trigger on a passed threshold, but other sensors that are co-located may not trigger because feature extracted data is below the triggering threshold. If the Locality Phenomena predicts that other co-located sensors should have detected the same signal, then we might trigger those devices for high fidelity data to determine if the signal is in the raw data stream even though it didn't meet the triggering threshold.
+By using different types of Phenomena, I can improve our triggering efficiency. For example, Locality Phenomena, as discussed in section \ref{locality-phenomena}, allow us to predict detections and classifications in space. If a particular grouping of sensors that are related in space always observe the same detections and classifications, then I can build a predictive model of when the framework can expect to see those things. In this way, a sensor may trigger on a passed threshold, but other sensors that are co-located may not trigger because feature extracted data is below the triggering threshold. If the Locality Phenomena predicts that other co-located sensors should have detected the same signal, then Laha might trigger those devices for high fidelity data to determine if the signal is in the raw data stream even though it didn't meet the triggering threshold.
 
-Laha can use Periodicity Phenomena, as discussed in section \ref{periodicity-phenomena}, in similar ways. When periodic signals are classified, we can create Future Phenomena that predicts when signals of interest should be detected and classified. This allows Laha to optimize triggering by tuning the triggers to specifically look for Periodic or Future Phenomena. Periodic and Future Phenomena also allows Laha to tune classification algorithms to the predicted classifications.
+Laha can use Periodicity Phenomena, as discussed in section \ref{periodicity-phenomena}, in similar ways. When periodic signals are classified, Laha can create Future Phenomena that predicts when signals of interest should be detected and classified. This allows Laha to optimize triggering by tuning the triggers to specifically look for Periodic or Future Phenomena. Periodic and Future Phenomena also allows Laha to tune classification algorithms to the predicted classifications.
 
 \subsection{Adaptive optimizations for detection and classification}
 Not only can Laha optimize triggering, but similar usages of Locality and Future phenomena can be utilized to improve detection and classification efficiency. With Locality Phenomena, a model of common detections and classifications can be built for a set of co-located sensors. Detection and classification algorithms can be tuned to search for specific signals that are often observed within this model, pruning the search space and increasing the accuracy of detection and classification algorithms.
@@ -49,16 +49,10 @@ Further, if the sensors provide any sort of location information, Laha can provi
 
 In this sense, Laha is not interested in knowing the location of sensors relative to each other, but is more interested in understanding how signals flow between sensors as a constraint on the topology that the signals travel through.
 
-
-\subsection{Decreased bandwidth of entire DSN}
-One of the tertiary benefits of optimizing triggering and classification is that we get decreased bandwidth usage for free. By improving triggering efficiency, its possible to trigger less devices for raw data when something interesting is observed in the triggering stream.
-
-Predictive phenomena allow us to target triggers to sensors that are most likely to have captured a signal of interest. For instance, if a geographical grouping of sensors tend to always observe the same signals of interest, then we can use that grouping to optimize triggering. Instead of triggering all devices in an area to search for the signal, we can trigger only on the specific grouping that is most likely have observed the signal. We can also selectively ignore sensors within a predictive grouping if Laha assumes that all sensors observed the signal, then we may only need to analyze the signal from one of the sensors rather than all of the sensors in the grouping.
-
 \section{Big Data Management in Laha} \label{big-data-management}
-The Laha framework acts as an adaptive sieve for filtering noise and uninteresting data collected from a DSN. In this way, each layer only passes what it considers interesting to the layer above it. All data at a particular layer is garbage collected at specific intervals relating to its important to the DSN.
+The Laha framework acts as an adaptive sieve for filtering noise and uninteresting data collected from a DSN. In this way, each level only passes what it considers interesting to the level above it. All data at a particular level is garbage collected at specific intervals relating to its important to the DSN.
 
-Each layer only keeps data for a specified amount of time before it is garbage collected. As data moves up the pyramid, it is generally considered more useful and therefore has a longer Time to Live (TTL), the amount of the time the data lives before it is garbage collected.  When a higher layer detects ``something interesting", the data contained in the time window of ``something interesting" is copied into the layers above it and will still persist even though the original data is garbage collected. In this way, we preserve data from all layers if they are associated with interesting data. 
+Each level only keeps data for a specified amount of time before it is garbage collected. As data moves up the pyramid, it is generally considered more useful and therefore has a longer Time to Live (TTL), the amount of the time the data lives before it is garbage collected.  When a higher level detects ``something interesting", the data contained in the time window of ``something interesting" is copied into the levels above it and will still persist even though the original data is garbage collected. In this way, Laha preserves data from all levels if they are associated with interesting data. 
 
 A summary of how data management in Laha is provided in table \ref{data-managament-table}. Note that the TTL is configurable for each implementing network and the table provides default values.
 
@@ -66,44 +60,44 @@ A summary of how data management in Laha is provided in table \ref{data-managame
 	\caption{Summary of data management in Laha}
 	\begin{tabular}{|c|c|c|}
 		\hline 
-		Layer & Description & Time-to-Live (TTL) \\ 
+		Level & Description & Time-to-Live (TTL) \\ 
 		\hline 
-		Phenomena Layer (PL) & Contextual \& predictive analytics &  \\ 
+		Phenomena Level (PL) & Contextual \& predictive analytics &  \\ 
 		\hline 
-		Incidents Layer (IL) & Classified signals &  1 year \\ 
+		Incidents Level (IL) & Classified signals &  1 year \\ 
 		\hline 
-		Detections Layer (DL) & Triggered windowed raw data & 1 week  \\ 
+		Detections Level (DL) & Triggered windowed raw data & 1 week  \\ 
 		\hline 
-		Aggregate Measurements Layer (AML) & Statistical aggregates of raw data  & 1 day  \\ 
+		Aggregate Measurements Level (AML) & Statistical aggregates of raw data  & 1 day  \\ 
 		\hline 
-		Instantaneous Measurements Layer (IML) & Raw sensor data  & 1 hour \\ 
+		Instantaneous Measurements Level (IML) & Raw sensor data  & 1 hour \\ 
 		\hline 
 	\end{tabular} 
     \label{data-managament-table}
 \end{table}
 
-\subsection{Instantaneous Measurements Layer}
-The Instantaneous Measurements Layer (IML) receives raw, sampled data from the DSN. The amount of data received is determined by the sample rate of each device multiplied by the number of fields per sample. Most of the time samples, from devices in the network are mainly sampling noise. A large percentage of the data in this layer is destined for garbage collection and data is assigned a Time to Live (TTL) of one hour. 
+\subsection{Instantaneous Measurements Level}
+The Instantaneous Measurements Level (IML) receives raw, sampled data from the DSN. The amount of data received is determined by the sample rate of each device multiplied by the number of fields per sample. Most of the time samples, from devices in the network are mainly sampling noise. A large percentage of the data in this level is destined for garbage collection and data is assigned a Time to Live (TTL) of one hour. 
 
-\subsection{Aggregate Measurements Layer}
-The Aggregate Measurements Layer (AML) is responsible for rolling up IMs from the IML. In general, this layer only works with feature extracted data, rather than working with the raw samples. Each measurement in the AML provides summary statistics over a configurable time window. For example, these can include min, max, mean, median, mode, and variance statistics. 
+\subsection{Aggregate Measurements Level}
+The Aggregate Measurements Level (AML) is responsible for rolling up IMs from the IML. In general, this level only works with feature extracted data, rather than working with the raw samples. Each measurement in the AML provides summary statistics over a configurable time window. For example, these can include min, max, mean, median, mode, and variance statistics. 
 
-It's possible to breakup the AML into several sub layers, each with different window sizes. For example, we might roll IMs into one minute AMs, then roll one minute AMs into hour AMs, then days, and so on. Each sublayer within the AML can have its own configurable TTL, ensuring long term summary statistics stick around for as long as needed. This provides us a high level view of the network and can provide insights into long term trends which wouldn't be visible (or available) in the IM data stream.
+It's possible to breakup the AML into several sub levels, each with different window sizes. For example, Laha might roll IMs into one minute AMs, then roll one minute AMs into hour AMs, then days, and so on. Each sublevel within the AML can have its own configurable TTL, ensuring long term summary statistics stick around for as long as needed. This provides us a high level view of the network and can provide insights into long term trends which wouldn't be visible (or available) in the IM data stream.
 
-Similar to IMs, AMs can be saved and copied to the layers above it when interesting data is observed. This ability allows for AMs during these time periods to be stored and saved from the garbage collection process.
+Similar to IMs, AMs can be saved and copied to the levels above it when interesting data is observed. This ability allows for AMs during these time periods to be stored and saved from the garbage collection process.
 
-At this point in the hierarchy, we are still not providing any context to the data that we are receiving. Context is provided by layers above the AML.
+At this point in the hierarchy, we are still not providing any context to the data that we are receiving. Context is provided by levels above the AML.
 
-\subsection{Detections Layer}
-The Detections Layer (DL) is the first layer that provides some context to the data that the sink is receiving. This layer is responsible watching the feature extracted data streams, and requesting IMs from the IM layer. In general, the detection layer is meant to be trigger happy\footnote{Pun intended.} and be overly aggressive when determining if a feature extracted data stream looks interesting. 
+\subsection{Detections Level}
+The Detections Level (DL) is the first level that provides some context to the data that the sink is receiving. This level is responsible watching the feature extracted data streams, and requesting IMs from the IM level. In general, the detection level is meant to be trigger happy\footnote{Pun intended.} and be overly aggressive when determining if a feature extracted data stream looks interesting. 
 
-When a data stream looks interesting, the DL marks a timestamp $N$ seconds before the interesting features and $M$ seconds after the interesting features, where both $N$ and $M$ are configurable within the framework. The goal is to use a time window that catches signals of interest within it. Since these data ranges will be further processed and refined higher in the hierarchy, there is no issue with collecting larges amounts of data in this layer. 
+When a data stream looks interesting, the DL marks a timestamp $N$ seconds before the interesting features and $M$ seconds after the interesting features, where both $N$ and $M$ are configurable within the framework. The goal is to use a time window that catches signals of interest within it. Since these data ranges will be further processed and refined higher in the hierarchy, there is no issue with collecting larges amounts of data in this level. 
 
 The actual methods of detection is dependent on the characteristics of every individual sensor network. This framework assumes that the detection algorithms are provided by the implementing frameworks.
 
-Similar to other layers, the DL layer will have its IMs and AMs copied into layers above it when upper layers observe something interesting in the DL. The detections layer is set to have a TTL of a week.
+Similar to other levels, the DL level will have its IMs and AMs copied into levels above it when upper levels observe something interesting in the DL. The detections level is set to have a TTL of a week.
 
-\subsection{Incidents Layer}
+\subsection{Incidents Level}
 Incidents represent classified signals. Incidents are individual classifications for signals of interest and are created by analyzing waveforms from Events. Waveforms from Events may contain multiple incidents. Individual signals may be classified as multiple incidents (for example a transient being classified as both a transient and frequency incidents). 
 
 Incidents are further analyzed to produce phenomena. 
@@ -111,7 +105,7 @@ Incidents are further analyzed to produce phenomena.
 Incidents are expired after one year of storage. 
 
 
-\subsection{Phenomena Layer}
+\subsection{Phenomena Level}
 Phenomena are defined as a grouping of incidents that provide one or more of annotations, locality, periodicity, predictiveness, similarity, and future phenomena. 
 
 Not only do Phenomena provide interesting insight and analytics into the underlying data, but they also provide a means for adaptively tuning the underlying collection, triggering, detection, and analysis of a distributed sensor network.
@@ -158,7 +152,7 @@ Over time, Locality Phenomena is used to build a model of sensors in relation to
 \subsection{Periodicity Phenomena} \label{periodicity-phenomena}
 Periodic phenomena consists of incidents that exhibit repetitive behavior, that is, the same types of incidents appearing in cycles from single or multiple devices. Periodicity allows for the easy creation of Predictive phenomena.
 
-Periodic phenomena can come from a single incident or from multiple incidents. Periodic phenomena allow us to either tune our network to find periodic incidents or tune the  network to ignore periodic incidents depending on if the incidents are of interest. Periodic phenomena are especially useful in conjunction with Annotation phenomena as we can assign causality to the periodic signal. 
+Periodic phenomena can come from a single incident or from multiple incidents. Periodic phenomena allow us to either tune our network to find periodic incidents or tune the  network to ignore periodic incidents depending on if the incidents are of interest. Periodic phenomena are especially useful in conjunction with Annotation phenomena as Laha can assign causality to the periodic signal. 
 
 \subsection{Similarity Phenomena}
 Similarity phenomena utilize grouping and community detection algorithms to group incidents together by their features. Common features used for grouping include time, location, incident type, or incident features.
@@ -168,13 +162,13 @@ Similarity phenomena utilize grouping and community detection algorithms to grou
 \subsection{Predictive Phenomena}
 Predictive phenomena consists of incidents that are characterized by a predictive or forecasting models. Predictiveness is a behavior that can be inferred from all other phenomena types. 
 
-Predictiveness is the main driver behind optimizing the control of a distributed sensor network. If we can predict the types of signals that will arrive at sensors, then we can tune those sensors and the sink to either filter the signals (if the user is not interested in signals) or tune the sensors and the sink to be extra sensitive to those signals, possible detecting them even if they previously would not have been detected.
+Predictiveness is the main driver behind optimizing the control of a distributed sensor network. If Laha can predict the types of signals that will arrive at sensors, then Laha can tune those sensors and the sink to either filter the signals (if the user is not interested in signals) or tune the sensors and the sink to be extra sensitive to those signals, possible detecting them even if they previously would not have been detected.
 
 \subsection{Future Phenomena}
-Predictive phenomena can be used to create future phenomena. Future phenomena are a statistical model of the likelihood of seeing an incident or incidents at future points in time. Knowing that a signal may occur with some probability allows agents affected by those signals time to prepare for the signals.
+Predictive phenomena can be used to create future phenomena. Future phenomena are a statistical model of the likelihood of seeing an incident or incidents at future points in time. Knowing that a signal may occur with some probability allows Actor affected by those signals time to prepare for the signals.
 
 \section{Laha Actors: Acting on the Laha Data Model}
-Laha Actors act on the Laha hierarchy and provide one of two functions. Actors can move data from one level of the hierarchy upwards through the hierarchy when interesting data is requested by an upper level. Actors can also apply adaptive optimizations downwards through the hierarchy. The Laha framework can support multiple actors at each level. For example, the Incidents Layer in our reference power quality network contains actors for each of the following functions: IEEE classified voltage events, frequency variations, power outages, excessive THD, and many others. The Incident Layer Actors move data from these incidents upwards to the Phenomena Layer.  
+Laha Actors act on the Laha hierarchy and provide one of two functions. Actors can move data from one level of the hierarchy upwards through the hierarchy when interesting data is requested by an upper level. Actors can also apply adaptive optimizations downwards through the hierarchy. The Laha framework can support multiple actors at each level. For example, the Incidents Level in our reference power quality network contains actors for each of the following functions: IEEE classified voltage events, frequency variations, power outages, excessive THD, and many others. The Incident Level Actors move data from these incidents upwards to the Phenomena Level.  
 
 Table \ref{laha-actors-tables} summarizes the actors that exist within the Laha framework and their purposes. 
 
@@ -257,7 +251,7 @@ An OPQ Box is a custom designed PQ sensor. OPQBoxes can be plugged into a wall o
 
 The feature extraction algorithms extract from the sampled waveform the following features: windowed $V_{RMS}$, frequency, and total harmonic distortion (THD) features. The feature extracted data is then sent to a central sink where further analysis is used to determine if the sensor or a subset of sensors should be triggered for raw data.
 
-The OPQ network is a hybrid network that uses edge computing for calculating features at the edge of the network. This is opposed to networks that utilize a ``send everything" approach. In this way, we are able to minimize bandwidth. 
+The OPQ network is a hybrid network that uses edge computing for calculating features at the edge of the network. This is opposed to networks that utilize a ``send everything" approach. In this way, Laha is able to minimize bandwidth. 
 
 OPQBoxes are synchronized to each other and the OPQ back end using the network time protocol (NTP). This provides synchronization to the millisecond level, which although is great for longer incidents, does not provide accurate timing for transients that may be shorter than tens of milliseconds.
 
@@ -316,7 +310,7 @@ OPQ and specifically OPQMauka comply with the Laha abstract framework. Table \re
 	\caption{OPQ as a Laha-compliant DSN}
 	\begin{tabular}{|c|c|c|c|c|}
 		\hline 
-		Laha Layer & OPQ & Created By & Stored By & TTL \\ 
+		Laha Level & OPQ & Created By & Stored By & TTL \\ 
 		\hline 
 		IML & raw ADC Samples & OPQBox & Onboard memory & 20 minutes \\ 
 		\hline 
