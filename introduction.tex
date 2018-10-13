@@ -40,13 +40,11 @@ Distributed sensor networks create a variety of data with different formats and 
 
 Further, sensor networks are often constrained in both computing power and available energy sources. This forces us to find comprises between data collection, onboard sensor processing, sensor communication, and network coordination.
 
-\section{The Data Management and Analysis Problems}
-All DSNs must decide how data is managed and analyzed. There are various approaches.
-
-\section{Traditional Approaches to Data Management and Analysis}
+\section{Traditional Approaches to DSN Optimization}
+Much of the literature focuses on the reduction of bandwidth and communication between sensors nodes and between sensor nodes and the sink. This is mainly performed as a means of sensor energy requirements allowing sensing to stay online longer or focus their energy usage for sensing or edge level computing. Anastasi et al\cite{anastasi_energy_2009} provide a really nice literature review on techniques for energy conservation in wireless sensor networks. Many of these approaches utilize optimized triggering\cite{alippi_adaptive_2010} or exploitation of topology knowledge\cite{warrier2007much} to minimize sensor communications and save sensor energy. TODO: to be continued.	
 
 \section{Laha: An Abstract Framework for Adaptively Optimizing DSNs}
-I propose an abstract distributed sensor network framework, Laha, that adaptively optimizes triggering, collection, detection, classification, sensor device power requirements, and bandwidth. The Laha data model can be conceptualized as a multilevel pyramid (see fig. \ref{laha-abstract-overview}). Laha Actors act on the data model to move data upward through the levels and to apply optimizations downward through the levels.
+I propose an abstract distributed sensor network framework, Laha, that adaptively optimizes triggering, collection, detection, classification, sensor device power requirements, and bandwidth. The Laha data model can be conceptualized as a multilevel pyramid (see fig. \ref{laha-abstract-overview}). Laha Actors act on the data model to move data upward through the levels and to apply optimizations downward through the levels. Many of these optimization techniques are used and research individually and to the best of my knowledge this is the first time they are all bring brought together in an attempt to optimize and entire network.
 
 The lowest level stores all recently received raw sensor data. This data expires and is automatically removed within a limited period of time (for example, 1 hour) unless the data is found to be interesting and is thus propagated upwards to the next level of the hierarchy.  Higher levels of the data hierarchy organize data in the same way, however each level adds context to the examined signal or signals. Context includes classifications, locality metrics, temporal metrics, or similarities to current or prior signals of interest. The highest level of the hierarchy, Phenomena, represents predictive capabilities of the sensor network which are then used to optimize and tune the lower levels.
 
