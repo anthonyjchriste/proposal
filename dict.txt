@@ -128,3 +128,5 @@ Savvides
 GPS
 Langendoen's
 Rabaey's
+GPS
+kinded
