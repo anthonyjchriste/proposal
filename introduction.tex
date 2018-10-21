@@ -80,7 +80,7 @@ Although not the main focus of this dissertation, during the course of providing
 	\item Sensor energy requirement optimizations
 \end{enumerate}
 
-These tangential benefits are provided by Laha Actors that exist within each level of the Laha framework. 
+These tangential benefits are provided by Laha Actors that exist within each level of the Laha framework. I don't claim that these techniques are novel, but I do claim that either all or a subset of these techniques are required to enable progress towards the main goals of this framework. To that end, Laha Actors will implement several state of the art algorithms present in the literature that will address these tertiary problems.
 
 Laha will be evaluated by designing and implementing two Laha-compliant reference implementations, OPQMauka and Lokahi. Open Power Quality (OPQ) is a power quality (PQ) network consisting of custom hardware and distributed software services that detect distributed PQ signals such as voltage sags and swells, frequency sags and swells, transients, THD, and other known PQ issues. OPQMauka is a distributed, plugin based middleware component of OPQ that performs higher level analysis, data management, and optimizations of the OPQ services. Lokahi is a distributed infrasound network consisting of mobile iOS and Android devices and multiple cloud based software services whose purpose is to supplement the International Monitoring System (IMS) in detecting large infrasound signals.
 
@@ -98,7 +98,9 @@ The second Laha-compliant DSN is Lokahi, a distributed, mobile infrasound detect
 
 In order to evaluate the multi-level representation of the Laha Framework in the context of providing actionable data, I will setup experiments to produce cyclical and predictable signals and test whether or not Laha is able to utilize predictive analytics to provide actionable insights. To test this, I will provide the number of false positive and false negatives for predictive analytic results. I will evaluate if the sensing domain has any effect on how well Laha is able to provide actionable insights. I also claim that each level in the Laha-hierarchy is important in the process of deriving these insights. I will provide data that either supports or opposes the usefulness of each level, whether the current number of levels is adequate, and whether the idea of using level to provide actionable insight is useful at all.
 
-Finally, I will evaluate my claim that a tiered TTL approach to sensor data management provides the benefits of providing an configurable upper bounds on storage requirements for each Laha level, graceful degradation, and a reduction of sensor noise being stored. To test this, I will implement procedures for calculating storage bounds and see if these theoretical bounds are valid in practice. Since it's possible that the TTL approach could throw away important data, I will measure the number of false positives using the TTL approach as a means of evaluating its usefulness with a discussion of how detrimental these false positives might actually be to understanding and creating actionable data sets.
+I will evaluate my claim that a tiered TTL approach to sensor data management provides the benefits of providing an configurable upper bounds on storage requirements for each Laha level, graceful degradation, and a reduction of sensor noise being stored. To test this, I will implement procedures for calculating storage bounds and see if these theoretical bounds are valid in practice. Since it's possible that the TTL approach could throw away important data, I will measure the number of false positives using the TTL approach as a means of evaluating its usefulness with a discussion of how detrimental these false positives might actually be to understanding and creating actionable data sets.
+
+Finally, I will evaluate multiple state of the art algorithms current in the literature for optimizing triggering, detection, classification, sensor energy usage, and topological modeling and provide metrics to their usefulness for making progress towards the larger goals of providing a generally useful representation for DSNs, converting primitive sensor data into actionable insights, and providing a tiered approach to DSN data management and storage requirements. I will provide a discussion on whether these techniques are useful within the two domains that they are implemented, and if they are, how they contribute to the overall goals of this framework. We also hope to show which combinations of tertiary techniques provide the most traction in solving the overall goals of this framework.
 
 %To evaluate the five benefits from Laha, several different approaches are taken depending on the Laha deployment and the benefit being evaluated. In the UH Manoa PQ deployment, I will co-locate sensors in our deployment and for each metric, one of the sensors will use Laha's optimizations and the other sensor will not. This will provide metrics that allows us to compare and contrast our optimization techniques within the OPQ network. 
 %
@@ -125,7 +127,9 @@ Second, an evaluation of the Laha abstract framework through the deployment of t
 
 Third, two Laha-compliant reference implementations, OPQ and Lokahi, which can be used to form DSNs for the collection of distributed power quality signals and the distributed collection of infrasound signals.
 
-Fourth, a set of implications for modern distributed sensor networks as a result of the evaluation of Laha. That is, how does the confirmation of denial of Laha's benefits affect the field of modern DSNs moving forward?
+Fourth, an evaluation of state of the art algorithms in practice and a discussion of their usefulness as applied to two different DSN domains.
+
+Fifth, a set of implications for modern distributed sensor networks as a result of the evaluation of Laha. That is, how does the confirmation of denial of Laha's benefits affect the field of modern DSNs moving forward?
 
 
 

@@ -59,7 +59,7 @@ Each level only keeps data for a specified amount of time before it is garbage c
 A summary of how data management in Laha is provided in table \ref{data-managament-table}. Note that the TTL is configurable for each implementing network and the table provides default values.
 
 \begin{table}
-	\caption{Summary of data management in Laha}
+	\caption{Summary of data management and context addition in Laha}
 	\begin{tabular}{|c|c|c|}
 		\hline 
 		Level & Description & Time-to-Live (TTL) \\ 
@@ -158,8 +158,6 @@ Periodic phenomena can come from a single incident or from multiple incidents. P
 
 \subsection{Similarity Phenomena}
 Similarity phenomena utilize grouping and community detection algorithms to group incidents together by their features. Common features used for grouping include time, location, incident type, or incident features.
-
-% TODO describe common community detection algorithms 
 
 \subsection{Predictive Phenomena}
 Predictive phenomena consists of incidents that are characterized by a predictive or forecasting models. Predictiveness is a behavior that can be inferred from all other phenomena types. 
@@ -305,51 +303,51 @@ The OPQ system design is laid out in figure \ref{fig:opq-system}.
 %\subsection{OPQ: Data Model}
 %% TODO
 
-\subsection{OPQ as a Laha-compliant DSN}
-OPQ and specifically OPQMauka comply with the Laha abstract framework. Table \ref{opq-compliance} summarizes how the OPQ data architecture fits within the Laha conceptual model.
-
-\begin{table}
-	\caption{OPQ as a Laha-compliant DSN}
-	\begin{tabular}{|c|c|c|c|c|}
-		\hline 
-		Laha Level & OPQ & Created By & Stored By & TTL \\ 
-		\hline 
-		IML & raw ADC Samples & OPQBox & Onboard memory & 20 minutes \\ 
-		\hline 
-		AML & min,max,avg V, F, THD & OPQBox & trends\footnotemark & 1 day \\ 
-		\hline 	
-		DL & triggered waveforms & Makai/Mauka & events/box\_events\textsuperscript{\ref{fn-1}} & 1 week \\
-		\hline
-		IL & Classified detections & Mauka & incidents\textsuperscript{\ref{fn-1}} & 1 year \\
-		\hline
-		PL & Predictive analytics & Mauka & phenomena\textsuperscript{\ref{fn-1}} & N/A \\
-		\hline
-	\end{tabular}
-	\label{opq-compliance}
-\end{table}  
-\footnotetext{MongoDB Collection Name\label{fn-1}}
-
-In order to be a Laha compliant DSN, the reference DSN must also implement Laha Actors. Table \ref{opq-actors} summarizes how OPQ implements Laha actors.
-
-\begin{table}
-	\caption{OPQ  Actors Implementation}
-	\begin{tabular}{|c|c|c|}
-		\hline 
-		Laha Actors & OPQ Equivalent & Description \\ 
-		\hline
-		IML Actors & Boxes & Store window of raw sensor samples \\
-		\hline
-		AML Actors & Boxes \& Makai & Makai stores and triggers on aggregate data from Boxes \\
-		\hline
-		DL Actors & Mauka & MakaiEvent plugin \\
-		\hline
-		IL Actors & Mauka & Voltage, Frequency, THD, Outage, plugins \\
-		\hline
-		PL Actors & Mauka & Annotations, Locality, Similarity,  Periodic, Predictive,  Future plugins\\
-		\hline
-	\end{tabular}
-	\label{opq-actors}
-\end{table}  
+%\subsection{OPQ as a Laha-compliant DSN}
+%OPQ and specifically OPQMauka comply with the Laha abstract framework. Table \ref{opq-compliance} summarizes how the OPQ data architecture fits within the Laha conceptual model.
+%
+%\begin{table}
+%	\caption{OPQ as a Laha-compliant DSN}
+%	\begin{tabular}{|c|c|c|c|c|}
+%		\hline 
+%		Laha Level & OPQ & Created By & Stored By & TTL \\ 
+%		\hline 
+%		IML & raw ADC Samples & OPQBox & Onboard memory & 20 minutes \\ 
+%		\hline 
+%		AML & min,max,avg V, F, THD & OPQBox & trends\footnotemark & 1 day \\ 
+%		\hline 	
+%		DL & triggered waveforms & Makai/Mauka & events/box\_events\textsuperscript{\ref{fn-1}} & 1 week \\
+%		\hline
+%		IL & Classified detections & Mauka & incidents\textsuperscript{\ref{fn-1}} & 1 year \\
+%		\hline
+%		PL & Predictive analytics & Mauka & phenomena\textsuperscript{\ref{fn-1}} & N/A \\
+%		\hline
+%	\end{tabular}
+%	\label{opq-compliance}
+%\end{table}  
+%\footnotetext{MongoDB Collection Name\label{fn-1}}
+%
+%In order to be a Laha compliant DSN, the reference DSN must also implement Laha Actors. Table \ref{opq-actors} summarizes how OPQ implements Laha actors.
+%
+%\begin{table}
+%	\caption{OPQ  Actors Implementation}
+%	\begin{tabular}{|c|c|c|}
+%		\hline 
+%		Laha Actors & OPQ Equivalent & Description \\ 
+%		\hline
+%		IML Actors & Boxes & Store window of raw sensor samples \\
+%		\hline
+%		AML Actors & Boxes \& Makai & Makai stores and triggers on aggregate data from Boxes \\
+%		\hline
+%		DL Actors & Mauka & MakaiEvent plugin \\
+%		\hline
+%		IL Actors & Mauka & Voltage, Frequency, THD, Outage, plugins \\
+%		\hline
+%		PL Actors & Mauka & Annotations, Locality, Similarity,  Periodic, Predictive,  Future plugins\\
+%		\hline
+%	\end{tabular}
+%	\label{opq-actors}
+%\end{table}  
 
 \section{Lokahi: A Laha-compliant Infrasound DSN}
 Lokahi is a dynamic DSN that originally evolved as a distributed infrasound detection network. Infrasound is characterized as sound waves that are less than 20 Hz. Infrasound generally can not be deciphered by the human ear, but it can be detected using microphone and barometric pressure sensors. Any large movements of the atmosphere can produce infrasound. The Lokahi network was designed to supplement the International Monitoring System (IMS) for the capture  of undeclared and declared nuclear explosions. Lokahi has been successfully used to capture signals from volcanoes, hurricanes, aircraft, meteors, and other large atmospheric events. 
@@ -392,5 +390,5 @@ A diagram of the Lokahi framework is provided in figure \ref{fig:lokahi}.
 %
 %% TODO, provide screenshot
 
-\subsubsection{Lokahi as a Laha-compliant DSN}
-TODO
+%\subsubsection{Lokahi as a Laha-compliant DSN}
+%TODO
