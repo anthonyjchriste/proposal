@@ -29,7 +29,7 @@ In the Lokahi deployment, I have the opportunity to generate infrasound signals 
 Evaluation of the main goals of this network are provided in the following sections.
 
 \subsection{Evaluation of the Generality of this Framework}
-I claim that the Laha framework is general enough to be applied to DSNs in different domains. To test this, I will design, develop, and deploy two DSNs. The first OPQ, measures distributed PQ signals on the electrical grid. The second, Lokahi, observes infrasound signals traveling through the atmosphere. 
+I claim that the Laha framework is useful and general enough to be applied to DSNs in different domains. To test this, I will design, develop, and deploy two DSNs. The first OPQ, measures distributed PQ signals on the electrical grid. The second, Lokahi, observes infrasound signals traveling through the atmosphere. 
 
 To evaluate the generality of the Laha design, I will provide metrics for whether or not each deployment is able to fulfill the goals of the given network.
 
@@ -47,8 +47,26 @@ Further, as availability is a major priority of this network, network outages mu
 
 Finally, backed by the metrics for both deployments, I will provide a critical discussion on what types of DSNs Laha is well suited for and what types of DSNs Laha is not well suited for. This will include a discussion on which parts of the Laha design are useful or a detriment to a given goal of the DSN.
 
-\subsection{Evaluation of Contextualizing Classified Incidents}
+The following sections continue to discuss the evaluation strategies required to show that Laha is a generally useful representation for a DSN.
 
+\subsection{Evaluation of Converting Primitive Data into Actionable Insights}
+An important goal of any DSN is to convert primitive sensor data into actionable insights. This is generally accomplished by adding some kind of context associated with the data such as classifications of a signal or linking the data with other data by comparing similarities in time, space, or other physical features.
+
+I claim that Laha's use of Actors acting on and moving data between levels in the Laha hierarchy provides a useful and generic approach to systematically adding context to data as it moves through the framework. Laha is designed with a specific number of levels where data within each level shares the same type. In each deployment, I will evaluate the usefulness of each level with regards to adding context to the data.
+
+In both deployments, I will evaluate the number of false negatives for incident classification. Each level in the framework is responsible for not only adding context, but deciding if data should be moved upward through the levels, adding more context along the way, or discarding data because a level does not think the data is ``interesting". I will keep track of the number of false negatives and which level was responsible for discarding the data with the signal. Using this approach, I will evaluate the effectiveness of each level to determine which levels correctly identify signals and which levels do not correctly identify signals, thus discarding the data.
+
+In order to be useful, I expect each level to add context to the data while maintaining a low level of false negatives.
+
+Using these metrics, I will provide a discussion on which domains a leveled approach may work well for versus which domains a leveled approach might not provide useful benefits.
+
+I claim that Laha is able to provide even more context and actionable insights by implementing a level called Phenomena. Phenomena utilize predictive analytics to provide context and actionable insights over the sensor domain. First, I will evaluate if Phenomena take place in practice for both of the Laha deployments. 
+
+To evaluate Phenomena in the OPQ network, OPQ must observe a cyclical incident such as voltage swells occurring every afternoon due to solar output or an electric motor turning on at the same time every day. Once a cyclical incident is observed, OPQ must correctly create predictive Phenomena that predict the same incident happening in the future. Assuming predictive Phenomena are created, I will measure the amount of false positives and false negatives on whether the predictions were correct or not. A positive result would show that now only is OPQ capable of making predictive Phenomena, but also that a high percentage (> 50\%) of the predictions are correct.
+
+Evaluation of predictive Phenomena in the Lokahi infrasound network will follow a similar strategy. However, since I can control the infrasound source, I can actually run an experiment that creates cyclical and non-cyclical signals. I will then test Lokahi's ability to not only create predictive Phenomena, but also show that the predictions are accurate, that is, greater than 50\% of them are correct. 
+
+A negative result would be that if either of the networks are not able to create predictive Phenomena or a large number of false positives or false negatives (combining for <50\% prediction accuracy).
 
 Adding context to classified Incidents is the act of providing a statistical likelihood of the underlying cause of the Incident. These include things like showing that a voltage sag is caused by turning on the dryer every day at 2PM or an identifying as infrasound signal as a repetitive flight pattern near an airport. Context is provided by external sources to the DSN (such as users or by performing data fusion with other correlating data sets).
 
@@ -76,7 +94,11 @@ Finally, I will provide an evaluation that weighs the results of all three metri
 I would expect that DSNs that have a lower signal-to-noise ratio will see greater benefits from tiered data management than DSNs that already have a decent signal-to-noise ratio.
 
 \section{Evaluation of Tertiary Goals}
-In order to achieve the main goals of this framework, I claim that either all or a subset of the following tertiary goals must be fulfilled. Optimization of triggering, detection, classification, sensor energy usage, bandwidth, predictive analytics, and the ability to derive models of the underlying sensing field topology.
+In order to achieve the main goals of this framework, I claim that either all or a subset of the following tertiary goals must be fulfilled. Optimization of triggering, detection, classification, sensor energy usage, bandwidth, predictive analytics, and the ability to derive models of the underlying sensing field topology. 
+
+To evaluate these tertiary goals, I will select and implement DSN optimization techniques from current literature. I will then compare and contrast the usefulness of different techniques and discuss how each of these techniques perform in the different sensor domains.
+
+Finally, I will discuss how each of these tertiary goals make progress towards overall goals of this sensor network.
 
 \subsection{Evaluation of Adaptive Optimizations for Triggering}
 Triggering is the act of observing a feature extracted data stream for interesting features and triggering sensors to provide raw data for a requested time window for higher level analysis. Adaptively optimizing triggering is a way to tune triggering algorithms and parameters with the aim of decreasing false positives and false negatives. In this context, a false positive is triggering on a data stream that does not contain a signal of interest and a false negative is not triggering on a data stream that does contain a signal of interest. 
