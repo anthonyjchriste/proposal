@@ -139,3 +139,4 @@ timestamped
 outliers
 Advisors
 Lokahi's
+smartphone
