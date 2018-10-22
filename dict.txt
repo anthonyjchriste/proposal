@@ -140,3 +140,8 @@ outliers
 Advisors
 Lokahi's
 smartphone
+CPUs
+datasets
+HACE
+CamCube
+Camdoop
