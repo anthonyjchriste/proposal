@@ -145,3 +145,8 @@ datasets
 HACE
 CamCube
 Camdoop
+schemas
+Rehman
+Luan
+Stateczny
+hydrographic
